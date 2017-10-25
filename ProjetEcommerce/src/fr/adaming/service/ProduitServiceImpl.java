@@ -20,10 +20,6 @@ public class ProduitServiceImpl implements IProduitService {
 		return produitDao.getAllProduit();
 	}
 	@Override
-	public List<Produit> getProduitById(int id) {
-		return produitDao.getProduitById(id);
-	}
-	@Override
 	public List<Produit> getAllProduitByCategorie(Categorie c) {
 		return produitDao.getAllProduitByCategorie(c);
 	}
@@ -39,15 +35,19 @@ public class ProduitServiceImpl implements IProduitService {
 		return produits;
 	}
 	@Override
-	public int addProduit(Produit p) {
-		return produitDao.addProduit(p);
+	public Produit getProduitById(long id) {
+		return produitDao.getProduitById(id);
 	}
 	@Override
-	public int deleteProduit(Produit p) {
-		return produitDao.deleteProduit(p);
+	public Produit addProduit(Produit p, Categorie c) {
+		return produitDao.addProduit(p, c);
 	}
 	@Override
-	public int modifyProduit(Produit p) {
+	public void deleteProduit(Produit p) {
+		produitDao.deleteProduit(p);
+	}
+	@Override
+	public Produit modifyProduit(Produit p) {
 		return produitDao.modifyProduit(p);
 	}
 }
