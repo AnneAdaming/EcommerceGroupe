@@ -22,14 +22,15 @@ public class CategorieDaoImpl implements ICategorieDao {
 	}
 
 	@Override
-	public Categorie getCategorieById(int id) {
-		String req="SELECT ca FROM Categorie ca WHERE ca.id=:pId";
-		Query query = em.createQuery(req);
-		query.setParameter("pId", id);
-		/*String req="SELECT * FROM categories WHERE id_ca=:pId";
-		Query query = em.createNativeQuery(req);
-		query.setParameter("pId", id);*/
-		Categorie ca=(Categorie) query.getSingleResult();
+	public Categorie getCategorieById(long id) {
+//		String req="SELECT ca FROM Categorie ca WHERE ca.id=:pId";
+//		Query query = em.createQuery(req);
+//		query.setParameter("pId", id);
+//		/*String req="SELECT * FROM categories WHERE id_ca=:pId";
+//		Query query = em.createNativeQuery(req);
+//		query.setParameter("pId", id);*/
+//		Categorie ca=(Categorie) query.getSingleResult();
+		Categorie ca=em.find(Categorie.class,id);
 		return ca;
 	}
 

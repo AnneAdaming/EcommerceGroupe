@@ -7,7 +7,7 @@ import fr.adaming.model.Categorie;
 @Local
 public interface ICategorieService {
 	public List<Categorie> getAllCategorie();
-	public Categorie getCategorieById(int id);
+	public Categorie getCategorieById(long id);
 	public Categorie addCategorie(Categorie c);
 	public int deleteCategorie(Categorie c);
 	public int modifyCategorie(Categorie c);
