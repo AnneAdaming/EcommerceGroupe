@@ -13,7 +13,6 @@ import fr.adaming.model.Produit;
 
 @Stateless
 public class ProduitDaoImpl implements IProduitDao {
-	
 	@PersistenceContext(unitName="PU_ECOMMERCE")
 	EntityManager em;
 
@@ -51,6 +50,9 @@ public class ProduitDaoImpl implements IProduitDao {
 
 	@Override
 	public void deleteProduit(Produit p) {
+		if (p == null) {
+			return;
+		}
 		p = em.merge(p);
 		em.remove(p);
 	}
