@@ -46,7 +46,6 @@ public class CategorieManagedBean {
 		for(Categorie c : listeTtesCategories) {
 			System.out.println(c);
 		}
-		System.out.println("ble");
 	}
 	public String selectionnerCategories() {
 		System.out.println("bla");
