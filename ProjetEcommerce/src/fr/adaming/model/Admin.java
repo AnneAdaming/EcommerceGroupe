@@ -1,25 +1,26 @@
 package fr.adaming.model;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name="agents")
+@Entity
+@Table(name="admins")
 public class Admin implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Attributs
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_ag")
+	@Column(name="id_ad")
 	private long id;
-	@Column(name="email_ag")
+	@Column(name="email_ad")
 	private String email;
-	@Column(name="mdp_ag")
+	@Column(name="mdp_ad")
 	private String mdp;
 	
 	// Constructeurs

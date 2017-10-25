@@ -13,10 +13,12 @@ public class AdminDaoImpl implements IAdminDao {
 	
 	@Override
 	public Admin getAdmin(String email, String mdp) {
-		String request = "SELECT a FROM Agent a WHERE a.email=:pEmail AND a.mdp=:pMdp";
+		String request = "SELECT a FROM Admin a";
 		Query query = em.createQuery(request);
-		query.setParameter("pEmail", email);
-		query.setParameter("pMdp", mdp);
+//		String request = "SELECT a FROM Admin a WHERE a.email=:pEmail AND a.mdp=:pMdp";
+//		Query query = em.createQuery(request);
+//		query.setParameter("pEmail", email);
+//		query.setParameter("pMdp", mdp);
 		return (Admin) query.getSingleResult();
 	}
 }
