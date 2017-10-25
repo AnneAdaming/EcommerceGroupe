@@ -62,6 +62,12 @@ public class Categorie implements Serializable {
 		this.description = description;
 	}
 	
+	public List<Produit> getListeProduits() {
+		return listeProduits;
+	}
+	public void setListeProduits(List<Produit> listeProduits) {
+		this.listeProduits = listeProduits;
+	}
 	//Méthodes métier
 	@Override
 	public String toString() {

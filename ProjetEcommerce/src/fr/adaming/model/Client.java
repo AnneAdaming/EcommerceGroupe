@@ -82,6 +82,12 @@ public class Client implements Serializable {
 		this.telephone = telephone;
 	}
 	
+	public List<Commande> getListeCommandes() {
+		return listeCommandes;
+	}
+	public void setListeCommandes(List<Commande> listeCommandes) {
+		this.listeCommandes = listeCommandes;
+	}
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", telephone="
