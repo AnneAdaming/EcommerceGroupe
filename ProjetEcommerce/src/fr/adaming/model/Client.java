@@ -1,12 +1,14 @@
 package fr.adaming.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name="clients")
 public class Client implements Serializable {
@@ -25,6 +27,8 @@ public class Client implements Serializable {
 	private String email;
 	@Column(name="telephone_cl")
 	private String telephone;
+	@OneToMany(mappedBy="client")	
+	private List<Commande> listeCommandes;
 	
 	// Constructeurs
 	public Client() {
