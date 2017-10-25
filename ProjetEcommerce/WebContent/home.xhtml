@@ -9,14 +9,33 @@
 	<title>Login</title>
 </h:head>
 <h:body>
-<h:form>
+	<h:form>
 		<p:menubar>
 			<f:facet name="options">
 				<h:commandButton value="Login" action="#{adminMB.login}" />
-				<p:commandButton type="button" value="Login" action="#{adminMB.login}" />
+				<p:commandButton type="button" value="Login"
+					action="#{adminMB.login}" />
 			</f:facet>
 		</p:menubar>
-</h:form>
+	</h:form>
+
+	<h:form id="form">
+    <p:carousel value="#{categorieMB.listeTtesCategories}" headerText="Catégories" var="categorie" itemStyle="text-align:center" responsive="true">
+        <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
+ 
+            
+            <h:outputText value="#{categorie.id}" />
+            <input type="checkbox" name="categorie" value="#{categorieMB.categoriesSelectionnees}"/>
+ 
+            <h:outputText value="#{categorie.nomCategorie}" />
+ 
+            <h:outputText value="#{categorie.description}"/>
+ 
+        </p:panelGrid>
+ 
+    </p:carousel>
+		<h:commandButton value="Sélectionner" action="#{categorieMB.selectionnerCategories}"></h:commandButton>
+	</h:form>
 
 </h:body>
 </html>
