@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import fr.adaming.model.Categorie;
 
@@ -22,8 +23,14 @@ public class CategorieDaoImpl implements ICategorieDao {
 
 	@Override
 	public Categorie getCategorieById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String req="SELECT ca FROM Categorie ca WHERE ca.id=:pId";
+		Query query = em.createQuery(req);
+		query.setParameter("pId", id);
+		/*String req="SELECT * FROM categories WHERE id_ca=:pId";
+		Query query = em.createNativeQuery(req);
+		query.setParameter("pId", id);*/
+		Categorie ca=(Categorie) query.getSingleResult();
+		return ca;
 	}
 
 	@Override
