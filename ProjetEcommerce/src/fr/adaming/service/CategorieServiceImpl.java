@@ -25,11 +25,11 @@ public class CategorieServiceImpl implements ICategorieService {
 		return categorieDao.addCategorie(c);
 	}
 	@Override
-	public int deleteCategorie(Categorie c) {
-		return categorieDao.deleteCategorie(c);
+	public void deleteCategorie(Categorie c) {
+		categorieDao.deleteCategorie(c);
 	}
 	@Override
-	public int modifyCategorie(Categorie c) {
+	public Categorie modifyCategorie(Categorie c) {
 		return categorieDao.modifyCategorie(c);
 	}
 }

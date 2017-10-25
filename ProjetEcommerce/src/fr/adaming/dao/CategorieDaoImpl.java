@@ -17,19 +17,15 @@ public class CategorieDaoImpl implements ICategorieDao {
 	
 	@Override
 	public List<Categorie> getAllCategorie() {
-		// TODO Auto-generated method stub
-		return null;
+		String req="SELECT ca FROM Categorie ca";
+		Query query=em.createQuery(req);
+		@SuppressWarnings("unchecked")
+		List<Categorie> liste=query.getResultList();
+		return liste;
 	}
 
 	@Override
 	public Categorie getCategorieById(long id) {
-//		String req="SELECT ca FROM Categorie ca WHERE ca.id=:pId";
-//		Query query = em.createQuery(req);
-//		query.setParameter("pId", id);
-//		/*String req="SELECT * FROM categories WHERE id_ca=:pId";
-//		Query query = em.createNativeQuery(req);
-//		query.setParameter("pId", id);*/
-//		Categorie ca=(Categorie) query.getSingleResult();
 		Categorie ca=em.find(Categorie.class,id);
 		return ca;
 	}
@@ -41,15 +37,16 @@ public class CategorieDaoImpl implements ICategorieDao {
 	}
 
 	@Override
-	public int deleteCategorie(Categorie c) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteCategorie(Categorie c) {
+		c=em.merge(c);
+		em.remove(c);
+
 	}
 
 	@Override
-	public int modifyCategorie(Categorie c) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Categorie modifyCategorie(Categorie c) {
+		em.merge(c);
+		return c;
 	}
 
 	
