@@ -8,10 +8,10 @@ import fr.adaming.model.Produit;
 @Local
 public interface IProduitService {
 	public List<Produit> getAllProduit();
-	public List<Produit> getProduitById(int id);
 	public List<Produit> getAllProduitByCategorie(Categorie c);
 	public List<Produit> getAllProduitByCategories(List<Categorie> cs);
-	public int addProduit(Produit p);
-	public int deleteProduit(Produit p);
-	public int modifyProduit(Produit p);
+	public Produit getProduitById(long id);
+	public Produit addProduit(Produit p, Categorie c);
+	public void deleteProduit(Produit p);
+	public Produit modifyProduit(Produit p);
 }

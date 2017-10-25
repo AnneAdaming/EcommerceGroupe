@@ -1,5 +1,6 @@
 package fr.adaming.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -21,38 +22,42 @@ public class ProduitDaoImpl implements IProduitDao {
 		String req="SELECT p FROM Produit p";
 		Query query=em.createQuery(req);
 		@SuppressWarnings("unchecked")
-		List<Produit> liste=query.getResultList();
-		return liste;
-	}
-
-	@Override
-	public List<Produit> getProduitById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Produit> resultat = query.getResultList();
+		return resultat;
 	}
 
 	@Override
 	public List<Produit> getAllProduitByCategorie(Categorie c) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Produit> resultat = new ArrayList<>();
+		for (Produit produit : getAllProduit()) {
+			if (produit.getCategorie().getId() == c.getId()) {
+				resultat.add(produit);
+			}
+		}
+		return resultat;
 	}
 
 	@Override
-	public int addProduit(Produit p) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Produit getProduitById(long id) {
+		return em.find(Produit.class, id);
 	}
 
 	@Override
-	public int deleteProduit(Produit p) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Produit addProduit(Produit p, Categorie c) {
+		p.setCategorie(c);
+		em.persist(p);
+		return p;
 	}
 
 	@Override
-	public int modifyProduit(Produit p) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteProduit(Produit p) {
+		p = em.merge(p);
+		em.remove(p);
 	}
 
+	@Override
+	public Produit modifyProduit(Produit p) {
+		em.merge(p);
+		return p;
+	}
 }
