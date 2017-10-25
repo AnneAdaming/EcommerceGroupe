@@ -2,6 +2,7 @@ package fr.adaming.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name="commandes")
 public class Commande implements Serializable {
@@ -25,6 +27,8 @@ public class Commande implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_cl", referencedColumnName="id_cl")
 	private Client client;
+	@OneToMany(mappedBy="commande")
+	private List<LigneCommande> listeLigneCommande;
 
 	// Constructeurs
 	public Commande() {
@@ -54,6 +58,18 @@ public class Commande implements Serializable {
 		this.date = date;
 	}
 	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public List<LigneCommande> getListeLigneCommande() {
+		return listeLigneCommande;
+	}
+	public void setListeLigneCommande(List<LigneCommande> listeLigneCommande) {
+		this.listeLigneCommande = listeLigneCommande;
+	}
 	@Override
 	public String toString() {
 		return "Commande [id=" + id + ", date=" + date + "]";
