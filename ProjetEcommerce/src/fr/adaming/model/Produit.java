@@ -1,5 +1,7 @@
 package fr.adaming.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,16 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="produits")
-public class Produit {
+public class Produit implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	//Attributs
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_pr")
 	private long id;
+	@Column(name="designation_pr")
 	private String designation;
+	@Column(name="description_pr")
 	private String description;
+	@Column(name="prix_pr")
 	private double prix;
+	@Column(name="quantite_pr")
 	private int quantite;
+	@Column(name="selectionne_pr")
 	private boolean selectionne;
 	
 	//Constructeurs
