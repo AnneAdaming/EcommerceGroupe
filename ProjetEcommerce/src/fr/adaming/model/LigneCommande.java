@@ -26,6 +26,9 @@ public class LigneCommande implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_co", referencedColumnName="id_co")
 	private Commande commande;
+	@ManyToOne
+	@JoinColumn(name="id_pr", referencedColumnName="id_pr")
+	private Produit produit;
 	
 	// Constructeurs
 	public LigneCommande() {
@@ -68,6 +71,12 @@ public class LigneCommande implements Serializable {
 	}
 	public void setCommande(Commande commande) {
 		this.commande = commande;
+	}
+	public Produit getProduit() {
+		return produit;
+	}
+	public void setProduit(Produit produit) {
+		this.produit = produit;
 	}
 	@Override
 	public String toString() {

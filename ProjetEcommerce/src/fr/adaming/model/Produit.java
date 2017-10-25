@@ -1,6 +1,7 @@
 package fr.adaming.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name="produits")
 public class Produit implements Serializable {
@@ -32,6 +34,8 @@ public class Produit implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_ca", referencedColumnName="id_ca")
 	private Categorie categorie;
+	@OneToMany(mappedBy="produit")
+	private List<LigneCommande> listeLigneCommande;
 	
 	//Constructeurs
 	public Produit() {
@@ -93,6 +97,18 @@ public class Produit implements Serializable {
 		this.selectionne = selectionne;
 	}
 	
+	public Categorie getCategorie() {
+		return categorie;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+	public List<LigneCommande> getListeLigneCommande() {
+		return listeLigneCommande;
+	}
+	public void setListeLigneCommande(List<LigneCommande> listeLigneCommande) {
+		this.listeLigneCommande = listeLigneCommande;
+	}
 	//Méthodes propres
 	@Override
 	public String toString() {
