@@ -1,13 +1,11 @@
-package fr.adaming.dao;
+package fr.adaming.service;
 
 import java.util.List;
-
 import javax.ejb.Local;
-
 import fr.adaming.model.Categorie;
 
 @Local
-public interface ICategorieDao {
+public interface ICategorieService {
 	public List<Categorie> getAllCategorie();
 	public Categorie getCategorieById(int id);
 	public int addCategorie(Categorie c);
