@@ -39,15 +39,14 @@
             Produits
         	</f:facet>
 
-			<p:panel header="#{prod.nom}" style="text-align:center">
+			<p:panel header="#{prod.designation}" style="text-align:center">
 				<h:panelGrid columns="2" style="width:100%">
 
-					<h:outputText value="#{prod.designation}" />
-					<h:outputText value="#{prod.prix}" />
 					
 					<h:outputText value="#{prod.description}" />
-					<h:outputText value="#{prod.id}" />
+					<h:outputText value="#{prod.prix}" />
 					
+					<h:outputText value="#{prod.id}" />
 					<h:outputText value="#{prod.quantite}" />
 
 					
