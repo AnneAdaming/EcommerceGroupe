@@ -1,5 +1,6 @@
 package fr.adaming.managedBeans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,14 +14,14 @@ import fr.adaming.service.ICategorieService;
 
 @ManagedBean(name="categorieMB")
 @RequestScoped
-public class CategorieManagedBean {
+public class CategorieMB implements Serializable {
 	private List<Categorie> listeTtesCategories;
 	private List<Categorie> categoriesSelectionnees;
 	
 	@EJB
 	private ICategorieService categorieService;
 
-	public CategorieManagedBean() {
+	public CategorieMB() {
 		super();
 	}
 
