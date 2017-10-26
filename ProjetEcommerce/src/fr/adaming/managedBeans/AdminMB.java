@@ -1,17 +1,12 @@
 package fr.adaming.managedBeans;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
+import javax.faces.event.ActionEvent;
 import fr.adaming.model.Admin;
-import fr.adaming.model.Categorie;
-import fr.adaming.model.Produit;
-import fr.adaming.service.ICategorieService;
-import fr.adaming.service.IProduitService;
+import fr.adaming.service.IAdminService;
 
 @ManagedBean(name="adminMB")
 @RequestScoped
@@ -22,9 +17,7 @@ public class AdminMB implements Serializable {
 	private Admin admin;
 	
 	@EJB
-	private IProduitService produitService;
-	@EJB
-	private ICategorieService categorieService;
+	private IAdminService adminService;
 
 	// Constructeur
 	public AdminMB() {
@@ -41,16 +34,13 @@ public class AdminMB implements Serializable {
 	
 	// Methodes
 	public String login() {
-		System.out.println("LOGIN LOGIN LOGIN LOGIN");
-		Categorie c1=new Categorie("Mobilier", "Tout plein de meubles");
-		Categorie c2=new Categorie("Cuisine", "Pour faire à manger");
-		categorieService.addCategorie(c1);
-		categorieService.addCategorie(c2);
-		
-		/*List<Produit> listeProduits=produitService.getAllProduit();
-		for (Produit p : listeProduits) {
-			System.out.println(p);
-		}*/
+		Admin adminOut = adminService.getAdmin("a@a", "a");
+		if (adminOut != null) {
+			System.out.println("Login");
+		}
 		return "home";
 	}
+    public void login(ActionEvent actionEvent) {
+    	System.out.println("Login");
+    }
 }
