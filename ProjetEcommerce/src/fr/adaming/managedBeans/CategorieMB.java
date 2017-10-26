@@ -1,61 +1,48 @@
 package fr.adaming.managedBeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
 import fr.adaming.model.Categorie;
-import fr.adaming.service.CategorieServiceImpl;
 import fr.adaming.service.ICategorieService;
 
 @ManagedBean(name="categorieMB")
 @RequestScoped
 public class CategorieMB implements Serializable {
-	private List<Categorie> listeTtesCategories;
-	private List<Categorie> categoriesSelectionnees;
+	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private ICategorieService categorieService;
+	private List<Categorie> listeCategories = new ArrayList<Categorie>();
+	private Categorie selectedCategorie = new Categorie();
 
 	public CategorieMB() {
 		super();
 	}
 
-	public List<Categorie> getListeTtesCategories() {
-		return listeTtesCategories;
+	public List<Categorie> getListeCategories() {
+		return listeCategories;
 	}
-
-	public void setListeTtesCategories(List<Categorie> listeTtesCategories) {
-		this.listeTtesCategories = listeTtesCategories;
+	public void setListeCategories(List<Categorie> listeCategories) {
+		this.listeCategories = listeCategories;
 	}
-	
-	public List<Categorie> getCategoriesSelectionnees() {
-		return categoriesSelectionnees;
+	public Categorie getSelectedCategorie() {
+		return selectedCategorie;
 	}
-
-	public void setCategoriesSelectionnees(List<Categorie> categoriesSelectionnees) {
-		this.categoriesSelectionnees = categoriesSelectionnees;
+	public void setSelectedCategorie(Categorie selectedCategorie) {
+		this.selectedCategorie = selectedCategorie;
 	}
 
 	@PostConstruct
-	public void init(){
-		listeTtesCategories=categorieService.getAllCategorie();
-		for(Categorie c : listeTtesCategories) {
-			System.out.println(c);
-		}
+	public void init() {
+		this.listeCategories = categorieService.getAllCategorie();
 	}
-	public String selectionnerCategories() {
-		System.out.println("bla");
-		if (categoriesSelectionnees==null){
-			System.out.println("scrogneugneu");
-		}
-//		for(Categorie c : categoriesSelectionnees) {
-//			System.out.println(c);
-//		}
-		return "#";
-	}
+	
+    public void onCategorieChange() {
+    	System.out.println(this.selectedCategorie);
+    }
 }
