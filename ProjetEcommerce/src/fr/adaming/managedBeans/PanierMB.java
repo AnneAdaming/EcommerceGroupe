@@ -34,21 +34,23 @@ public class PanierMB implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		maSession = (HttpSession) context.getExternalContext().getSession(false);
 		if (maSession == null) {
-			// On ne peut pas être sûr que la session a déjà été créée, donc si ça n'est pas le cas, on la crée avec son attribut panier
+			// On ne peut pas être sûr que la session a déjà été créée, donc si
+			// ça n'est pas le cas, on la crée avec son attribut panier
 			maSession = (HttpSession) context.getExternalContext().getSession(true);
-			this.panier = new Panier();	
+			this.panier = new Panier();
 			this.panier.setListe(new ArrayList<LigneCommande>());
 			maSession.setAttribute("panier", panier);
 		} else {
 			System.out.println("Sesssion existante");
-			this.panier=(Panier) maSession.getAttribute("panier");
-			if(panier==null) {
+			this.panier = (Panier) maSession.getAttribute("panier");
+			if (panier == null) {
 				System.out.println("Scrogneugneu");
-				this.panier = new Panier();	
+				this.panier = new Panier();
+				this.panier.setListe(new ArrayList<LigneCommande>());
 				maSession.setAttribute("panier", panier);
 			}
 		}
-		
+
 		this.ligne = new LigneCommande();
 	}
 
@@ -77,12 +79,13 @@ public class PanierMB implements Serializable {
 	}
 
 	public String ajout() {
-
-		System.out.println("Test vaut " + id + " la quantité est de " + ligne.getQuantite());
+		System.out.println("La quantité est de "+ligne.getQuantite());
 		Produit produit = produitService.getProduitById(id);
 		ligne.setProduit(produit);
 		ligne.setPrix(produit.getPrix());
 		panier.getListe().add(ligne);
+		maSession.setAttribute("panier", panier);
+		
 		System.out.println(ligne);
 		System.out.println(panier);
 		return "#";

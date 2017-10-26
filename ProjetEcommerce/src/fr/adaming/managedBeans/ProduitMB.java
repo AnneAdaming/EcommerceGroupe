@@ -23,9 +23,11 @@ public class ProduitMB implements Serializable {
 
 	private List<Produit> listeProduits;
 	private Categorie categorie;
+	private Produit produit;
+	private long idCategorie;
 
 	public ProduitMB() {
-		super();
+		produit=new Produit();
 	}
 
 	public List<Produit> getListeProduits() {
@@ -36,6 +38,30 @@ public class ProduitMB implements Serializable {
 		this.listeProduits = listeProduits;
 	}
 
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public Produit getProduit() {
+		return produit;
+	}
+
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
+
+	public long getIdCategorie() {
+		return idCategorie;
+	}
+
+	public void setIdCategorie(long idCategorie) {
+		this.idCategorie = idCategorie;
+	}
+
 	@PostConstruct
 	private void init() {
 		this.listeProduits = produitService.getAllProduit();
@@ -43,5 +69,11 @@ public class ProduitMB implements Serializable {
 
 	public void rechercherProduits() {
 		
+	}
+	
+	public String ajouterProduit() {
+		System.out.println(produit);
+		System.out.println(idCategorie);
+		return null;
 	}
 }
