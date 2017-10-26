@@ -22,10 +22,10 @@
 	</h:form>
 
 	<h:form id="categories">
-		<p:selectOneMenu id="country" value="#{categorieMB.selectedCategorie}" style="width:150px">
+		<p:selectOneMenu id="categorie" value="#{categorieMB.nomCategorieChoisie}" style="width:150px">
 			<p:ajax listener="#{categorieMB.onCategorieChange}" />
 				<f:selectItem itemLabel="Select Categorie" itemValue="" noSelectionOption="true" />
-				<f:selectItems value="#{categorieMB.listeCategories}" />
+				<f:selectItems value="#{categorieMB.mapCategories}" />
 		</p:selectOneMenu>
 	</h:form>
 

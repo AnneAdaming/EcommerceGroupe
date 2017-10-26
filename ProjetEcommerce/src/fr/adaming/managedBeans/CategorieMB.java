@@ -1,8 +1,9 @@
 package fr.adaming.managedBeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -17,32 +18,35 @@ public class CategorieMB implements Serializable {
 	
 	@EJB
 	private ICategorieService categorieService;
-	private List<Categorie> listeCategories = new ArrayList<Categorie>();
-	private Categorie selectedCategorie = new Categorie();
+	private Map<String,String> mapCategories = new HashMap<String,String>();
+	private String nomCategorieChoisie;
 
 	public CategorieMB() {
 		super();
 	}
 
-	public List<Categorie> getListeCategories() {
-		return listeCategories;
+	public Map<String, String> getMapCategories() {
+		return mapCategories;
 	}
-	public void setListeCategories(List<Categorie> listeCategories) {
-		this.listeCategories = listeCategories;
+	public void setMapCategories(Map<String, String> mapCategories) {
+		this.mapCategories = mapCategories;
 	}
-	public Categorie getSelectedCategorie() {
-		return selectedCategorie;
+	public String getNomCategorieChoisie() {
+		return nomCategorieChoisie;
 	}
-	public void setSelectedCategorie(Categorie selectedCategorie) {
-		this.selectedCategorie = selectedCategorie;
+	public void setNomCategorieChoisie(String nomCategorieChoisie) {
+		this.nomCategorieChoisie = nomCategorieChoisie;
 	}
 
 	@PostConstruct
 	public void init() {
-		this.listeCategories = categorieService.getAllCategorie();
+		List<Categorie> categories = categorieService.getAllCategorie();
+		for (Categorie categorie : categories) {
+			mapCategories.put(categorie.getNomCategorie(), categorie.getNomCategorie());
+		}
 	}
 	
     public void onCategorieChange() {
-    	System.out.println(this.selectedCategorie);
+    	System.out.println(this.nomCategorieChoisie);
     }
 }
