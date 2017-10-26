@@ -20,21 +20,55 @@
 	</h:form>
 
 	<h:form id="form">
-    <p:carousel value="#{categorieMB.listeTtesCategories}" headerText="Catégories" var="categorie" itemStyle="text-align:center" responsive="true">
-        <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
- 
-            
-            <h:outputText value="#{categorie.id}" />
-            <input type="checkbox" name="categorie" value="#{categorieMB.categoriesSelectionnees}"/>
- 
-            <h:outputText value="#{categorie.nomCategorie}" />
- 
-            <h:outputText value="#{categorie.description}"/>
- 
-        </p:panelGrid>
- 
-    </p:carousel>
-		<h:commandButton value="Sélectionner" action="#{categorieMB.selectionnerCategories}"></h:commandButton>
+		<p:carousel value="#{categorieMB.listeTtesCategories}"
+			headerText="Catégories" var="categorie" itemStyle="text-align:center"
+			responsive="true">
+			<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+				columnClasses="label,value" layout="grid"
+				styleClass="ui-panelgrid-blank">
+
+
+				<h:outputText value="#{categorie.id}" />
+				<input type="checkbox" name="categorie"
+					value="#{categorieMB.categoriesSelectionnees}" />
+
+				<h:outputText value="#{categorie.nomCategorie}" />
+
+				<h:outputText value="#{categorie.description}" />
+
+			</p:panelGrid>
+
+		</p:carousel>
+		<h:commandButton value="Sélectionner"
+			action="#{categorieMB.selectionnerCategories}"></h:commandButton>
+	</h:form>
+
+	<h:form id="produits">
+		<p:dataGrid var="prod" value="#{produitMB.listeProduits}" columns="3" layout="grid"
+			rows="12" paginator="true" id="prods"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="6,12,16">
+
+			<f:facet name="header">
+            Produits
+        	</f:facet>
+
+			<p:panel header="#{prod.nom}" style="text-align:center">
+				<h:panelGrid columns="2" style="width:100%">
+
+					<h:outputText value="#{prod.designation}" />
+					<h:outputText value="#{prod.prix}" />
+					
+					<h:outputText value="#{prod.description}" />
+					<h:outputText value="#{prod.id}" />
+					
+					<h:outputText value="#{prod.quantite}" />
+
+					
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
 	</h:form>
 
 </h:body>
