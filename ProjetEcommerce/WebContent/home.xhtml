@@ -61,8 +61,8 @@
 
 					<h:inputText value="#{panierMB.ligne.quantite}"></h:inputText>
 					<p:commandButton value="Sélectionner" action="#{panierMB.ajout}">
-						<f:setPropertyActionListener target="#{panierMB.test}"
-							value="XXXXXXXXXXXXXXXXXXX" />
+						<f:setPropertyActionListener target="#{panierMB.id}"
+							value="#{prod.id}" />
 					</p:commandButton>
 					<p:commandButton value="Modifier Produit"
 						action="modif_produit.xhtml"></p:commandButton>

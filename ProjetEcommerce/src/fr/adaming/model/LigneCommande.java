@@ -24,7 +24,7 @@ public class LigneCommande implements Serializable {
 	@Column(name="quantite_li")
 	private int quantite;
 	@Column(name="prix_li")
-	private int prix;
+	private double prix;
 	@ManyToOne
 	@JoinColumn(name="id_co", referencedColumnName="id_co")
 	private Commande commande;
@@ -61,10 +61,10 @@ public class LigneCommande implements Serializable {
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
-	public int getPrix() {
+	public double getPrix() {
 		return prix;
 	}
-	public void setPrix(int prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
