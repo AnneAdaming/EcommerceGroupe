@@ -19,12 +19,15 @@
 	<h:form>
 	</h:form>
 
-	<h:form id="categories">
+	<h:form id="searchbar">
 		<p:selectOneMenu id="categorie" value="#{categorieMB.nomCategorieChoisie}" style="width:150px">
 			<p:ajax listener="#{categorieMB.onCategorieChange}" />
 				<f:selectItem itemLabel="Select Categorie" itemValue="" noSelectionOption="true" />
 				<f:selectItems value="#{categorieMB.mapCategories}" />
 		</p:selectOneMenu>
+		<p:commandButton value="Rechercher" actionListener="#{produitMB.rechercherProduits}">
+			<f:setPropertyActionListener target="#{produitMB.categorie}" value="#{categorieMB.nomCategorieChoisie}" />
+		</p:commandButton>
 	</h:form>
 
 	<h:form id="produits">
@@ -50,7 +53,6 @@
 					</p:commandButton>
 				</h:panelGrid>
 			</p:panel>
-
 		</p:dataGrid>
 	</h:form>
 
