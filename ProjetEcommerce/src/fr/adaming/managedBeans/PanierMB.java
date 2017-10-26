@@ -3,6 +3,7 @@ package fr.adaming.managedBeans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -14,12 +15,15 @@ import fr.adaming.model.Panier;
 public class PanierMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+
 	private Panier panier;
 	private LigneCommande ligne;
+	private String test;
 	
 	
 	public PanierMB() {
-		super();
+		this.panier=new Panier();
+		this.ligne=new LigneCommande();
 	}
 
 
@@ -43,7 +47,19 @@ public class PanierMB implements Serializable {
 	}
 
 
+	public String getTest() {
+		return test;
+	}
+
+
+	public void setTest(String test) {
+		this.test = test;
+	}
+
+
 	public String ajout() {
-		return null;
+		//ligne.setProduit(produit);
+		System.out.println("Test vaut "+test);
+		return "#";
 	}
 }

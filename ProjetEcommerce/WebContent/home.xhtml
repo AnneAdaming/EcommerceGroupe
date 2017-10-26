@@ -50,7 +50,9 @@
 					<h:outputText value="#{prod.quantite}" />
 
 					<h:inputText value="#{panierMB.ligne.quantite}"></h:inputText>
-					<h:commandButton value="Sélectionner" action="#{panierMB.ajout}"></h:commandButton>
+					<h:commandButton value="Sélectionner" action="#{panierMB.ajout}">
+						<f:param name="test" value="bla"></f:param>
+					</h:commandButton>
 				</h:panelGrid>
 			</p:panel>
 
