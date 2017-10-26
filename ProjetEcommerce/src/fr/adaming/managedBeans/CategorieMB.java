@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.event.ActionEvent;
+
 import fr.adaming.model.Categorie;
 import fr.adaming.service.ICategorieService;
 
@@ -18,35 +20,45 @@ public class CategorieMB implements Serializable {
 	
 	@EJB
 	private ICategorieService categorieService;
-	private Map<String,String> mapCategories = new HashMap<String,String>();
-	private String nomCategorieChoisie;
+	private String[] selectedNomCategories;
+	private List<String> listeNomCategories;
+	private List<Categorie> listeCategories;
 
 	public CategorieMB() {
 		super();
 	}
-
-	public Map<String, String> getMapCategories() {
-		return mapCategories;
+	
+	public String[] getSelectedNomCategories() {
+		return selectedNomCategories;
 	}
-	public void setMapCategories(Map<String, String> mapCategories) {
-		this.mapCategories = mapCategories;
+	public void setSelectedNomCategories(String[] selectedNomCategories) {
+		this.selectedNomCategories = selectedNomCategories;
 	}
-	public String getNomCategorieChoisie() {
-		return nomCategorieChoisie;
+	public List<String> getListeNomCategories() {
+		return listeNomCategories;
 	}
-	public void setNomCategorieChoisie(String nomCategorieChoisie) {
-		this.nomCategorieChoisie = nomCategorieChoisie;
+	public void setListeNomCategories(List<String> listeNomCategories) {
+		this.listeNomCategories = listeNomCategories;
+	}
+	public List<Categorie> getListeCategories() {
+		return listeCategories;
+	}
+	public void setListeCategories(List<Categorie> listeCategories) {
+		this.listeCategories = listeCategories;
 	}
 
 	@PostConstruct
 	public void init() {
-		List<Categorie> categories = categorieService.getAllCategorie();
-		for (Categorie categorie : categories) {
-			mapCategories.put(categorie.getNomCategorie(), categorie.getNomCategorie());
+		this.listeCategories = categorieService.getAllCategorie();
+		for (Categorie categorie : listeCategories) {
+			System.out.println("Categorie : " + categorie);
 		}
+//		for (int i = 0; i < selectedNomCategories.length; i++) {
+//			listeNomCategories.add(listeCategories.get(i).getNomCategorie());
+//		}
 	}
 	
-    public void onCategorieChange() {
-    	System.out.println(this.nomCategorieChoisie);
+    public void onCategorieChange(ActionEvent actionEvent) {
+    	System.out.println("categorie changed");
     }
 }

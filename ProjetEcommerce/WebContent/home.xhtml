@@ -13,6 +13,7 @@
 		<p:menubar>
 			<p:menuitem>
 				<p:commandButton value="Login" actionListener="#{adminMB.login}" />
+				<p:commandButton value="Ajouter Produit" action="ajout_produit.xhtml"></p:commandButton>
 			</p:menuitem>
 		</p:menubar>
 	</h:form>
@@ -20,19 +21,30 @@
 	</h:form>
 
 	<h:form id="searchbar">
-		<p:selectOneMenu id="categorie" value="#{categorieMB.nomCategorieChoisie}" style="width:150px">
+<!-- 		<h:panelGrid columns="2" cellpadding="5"> -->
+<!-- 			<h:outputLabel for="multiple" value="Multiple:" /> -->
+<!-- 			<p:selectCheckboxMenu id="multiple" -->
+<!-- 				value="#{checkboxView.selectedCities2}" label="Categories" -->
+<!-- 				multiple="true" filter="true" filterMatchMode="startsWith" -->
+<!-- 				panelStyle="width:250px"> -->
+<!-- 				<f:selectItems value="#{checkboxView.cities}" /> -->
+<!-- 			</p:selectCheckboxMenu> -->
+<!-- 		</h:panelGrid> -->
+		<p:selectOneMenu id="categorie" style="width:150px">
 			<p:ajax listener="#{categorieMB.onCategorieChange}" />
-				<f:selectItem itemLabel="Select Categorie" itemValue="" noSelectionOption="true" />
-				<f:selectItems value="#{categorieMB.mapCategories}" />
+<!-- 			<f:selectItem itemLabel="Select Categorie" itemValue="" noSelectionOption="true" /> -->
+<!-- 			<f:selectItems value="#{categorieMB.mapCategories}" /> -->
 		</p:selectOneMenu>
-		<p:commandButton value="Rechercher" actionListener="#{produitMB.rechercherProduits}">
-			<f:setPropertyActionListener target="#{produitMB.categorie}" value="#{categorieMB.nomCategorieChoisie}" />
+		<p:commandButton value="Rechercher"
+			actionListener="#{produitMB.rechercherProduits}">
+			<f:setPropertyActionListener target="#{produitMB.idCategorieChoisie}"
+				value="#{categorieMB.idCategorieChoisie}" />
 		</p:commandButton>
 	</h:form>
 
 	<h:form id="produits">
-		<p:dataGrid var="prod" value="#{produitMB.listeProduits}" columns="3" layout="grid"
-			rows="12" paginator="true" id="prods"
+		<p:dataGrid var="prod" value="#{produitMB.listeProduits}" columns="3"
+			layout="grid" rows="12" paginator="true" id="prods"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="6,12,16">
 			<f:facet name="header">
@@ -40,21 +52,23 @@
         	</f:facet>
 			<p:panel header="#{prod.designation}" style="text-align:center">
 				<h:panelGrid columns="2" style="width:100%">
-					
+
 					<h:outputText value="#{prod.description}" />
 					<h:outputText value="#{prod.prix}" />
-					
+
 					<h:outputText value="#{prod.id}" />
 					<h:outputText value="#{prod.quantite}" />
 
 					<h:inputText value="#{panierMB.ligne.quantite}"></h:inputText>
 					<p:commandButton value="Sélectionner" action="#{panierMB.ajout}">
-						<f:setPropertyActionListener target="#{panierMB.test}" value="XXXXXXXXXXXXXXXXXXX" />
+						<f:setPropertyActionListener target="#{panierMB.test}"
+							value="XXXXXXXXXXXXXXXXXXX" />
 					</p:commandButton>
+					<p:commandButton value="Modifier Produit"
+						action="modif_produit.xhtml"></p:commandButton>
 				</h:panelGrid>
 			</p:panel>
 		</p:dataGrid>
 	</h:form>
-
 </h:body>
 </html>
