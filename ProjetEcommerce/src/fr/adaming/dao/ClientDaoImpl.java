@@ -14,4 +14,12 @@ public class ClientDaoImpl implements IClientDao {
 	public Client getClientById(long id) {
 		return em.find(Client.class, id);
 	}
+
+	@Override
+	public Client addClient(Client cl) {
+		em.persist(cl);
+		return cl;
+	}
+
+	
 }

@@ -31,7 +31,7 @@ public class Produit implements Serializable {
 	private double prix;
 	@Column(name="quantite_pr")
 	private int quantite;
-	@Column(name="selectionne_pr")
+	@Column(name="selectionne_pr",columnDefinition="TINYINT(1)")
 	private boolean selectionne;
 	@ManyToOne
 	@JoinColumn(name="id_ca", referencedColumnName="id_ca")

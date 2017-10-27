@@ -6,4 +6,5 @@ import fr.adaming.model.Client;
 @Local
 public interface IClientService {
 	Client getClientById(long id);
+	Client addClient(Client cl);
 }
