@@ -12,16 +12,18 @@
 <h:body>
 	<h:form id="login">
 		<p:menubar>
-			<p:menuitem>
-				<p:commandButton value="Login" actionListener="#{adminMB.login()}" />
-				<p:link value="Ajouter Produit" outcome="ajout_produit.xhtml"></p:link>
-				 | 
-				<p:link value="Modifier Produit" outcome="modif_produit.xhtml"></p:link>
-				 | 
-				<p:link value="Voir le panier" outcome="panier.xhtml"></p:link>
-				 | 
-				<p:commandButton value="Remplir DB" action="#{creationDonneesMB.remplirDB()}" />
-			</p:menuitem>
+			<p:menuitem value="Ajouter Produit" url="ajout_produit.xhtml" />
+			<p:menuitem value="Modifier Produit" url="modif_produit.xhtml" />
+			<p:menuitem value="Voir le panier" url="panier.xhtml" />
+			<f:facet name="options">
+				<c:if test="#{adminMB.logged!=true}">
+					<p:commandButton value="Login" actionListener="#{adminMB.login()}" style="margin-right:10px" />
+				</c:if>
+				<c:if test="#{adminMB.logged==true}">
+					<p:outputLabel value="#{adminMB.admin.email}" style="margin-right:10px" />
+					<p:commandButton value="Logout" actionListener="#{adminMB.logout()}" icon="ui-icon-extlink" />
+				</c:if>
+        	</f:facet>
 		</p:menubar>
 	</h:form>
 

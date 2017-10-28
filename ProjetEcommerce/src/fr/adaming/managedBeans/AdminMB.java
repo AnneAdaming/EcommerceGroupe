@@ -1,27 +1,28 @@
 package fr.adaming.managedBeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.event.ActionEvent;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import fr.adaming.model.Admin;
 import fr.adaming.service.IAdminService;
 
 @ManagedBean(name="adminMB")
-@RequestScoped
+@SessionScoped
 public class AdminMB implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	// Attributs
-	private Admin admin;
-	
 	@EJB
 	private IAdminService adminService;
+	private Admin admin;
+	private boolean logged;
 
 	// Constructeur
 	public AdminMB() {
 		super();
+		this.logged = false;
 	}
 
 	// Getters / Setters
@@ -31,16 +32,33 @@ public class AdminMB implements Serializable {
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
-	
+	public boolean isLogged() {
+		return logged;
+	}
+	public void setLogged(boolean logged) {
+		this.logged = logged;
+	}
+
 	// Methodes
 	public String login() {
-		Admin adminOut = adminService.getAdmin("a@a", "a");
-		if (adminOut != null) {
-			System.out.println("Login");
+		admin = adminService.getAdmin("a@a", "a");
+		if (admin != null) {
+			this.logged = true;
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return "home";
+		return "";
 	}
-    public void login(ActionEvent actionEvent) {
-    	System.out.println("Login");
-    }
+	public String logout() {
+		admin = null;
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 }
