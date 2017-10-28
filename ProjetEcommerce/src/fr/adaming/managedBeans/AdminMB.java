@@ -41,8 +41,8 @@ public class AdminMB implements Serializable {
 
 	// Methodes
 	public String login() {
-		admin = adminService.getAdmin("a@a", "a");
-		if (admin != null) {
+		this.admin = adminService.getAdmin("a@a", "a");
+		if (this.admin != null) {
 			this.logged = true;
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("");
@@ -53,7 +53,8 @@ public class AdminMB implements Serializable {
 		return "";
 	}
 	public String logout() {
-		admin = null;
+		this.admin = null;
+		this.logged = false;
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("");
 		} catch (IOException e) {
