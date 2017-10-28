@@ -20,12 +20,11 @@
 			<h:outputText value="#{ligne.prix}" />
 		</p:column>
 		<p:column headerText="Prix total">
-			<h:outputText value="TODO" />
+			<h:outputText value="#{ligne.total}" />
 		</p:column>
-
-
-
 	</p:dataTable>
+	
+	<p>Le total est de #{panierMB.total} euros.</p>
 
 	<h:form>
 		<h:panelGrid columns="2">
@@ -41,9 +40,11 @@
 				<p:outputLabel for="tel" value="Téléphone : " />
 			<p:inputMask id="tel"
 				value="#{panierMB.client.telephone}" />
-			<p:commandButton value="Valider la commande" action="#{panierMB.valider}"></p:commandButton>
+			<p:commandButton update=":message" value="Valider la commande" action="#{panierMB.valider}"></p:commandButton>
 		</h:panelGrid>
 	</h:form>
+
+<p:growl id="message"></p:growl>
 
 </h:body>
 </html>

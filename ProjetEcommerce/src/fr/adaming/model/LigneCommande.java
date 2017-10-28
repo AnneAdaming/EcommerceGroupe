@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="ligneCommandes")
@@ -32,6 +33,9 @@ public class LigneCommande implements Serializable {
 	@JoinColumn(name="id_pr", referencedColumnName="id_pr")
 	private Produit produit;
 	
+	@Transient
+	private double total;
+	
 	// Constructeurs
 	public LigneCommande() {
 		super();
@@ -40,12 +44,14 @@ public class LigneCommande implements Serializable {
 		super();
 		this.quantite = quantite;
 		this.prix = prix;
+		this.total=prix*(double)quantite;
 	}
 	public LigneCommande(long id, int quantite, double prix) {
 		super();
 		this.id = id;
 		this.quantite = quantite;
 		this.prix = prix;
+		this.total=prix*(double)quantite;
 	}
 	
 	// Getters / Setters
@@ -79,6 +85,12 @@ public class LigneCommande implements Serializable {
 	}
 	public void setProduit(Produit produit) {
 		this.produit = produit;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
 	}
 	@Override
 	public String toString() {

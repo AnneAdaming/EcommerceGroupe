@@ -33,6 +33,7 @@ public class PanierMB implements Serializable {
 	private LigneCommande ligne;
 	private long id;
 	private Client client;
+	private double total;
 
 	@EJB
 	private IProduitService produitService;
@@ -45,7 +46,7 @@ public class PanierMB implements Serializable {
 
 	public PanierMB() {
 		this.ligne = new LigneCommande();
-		this.client=new Client();
+		this.client = new Client();
 	}
 
 	@PostConstruct
@@ -59,6 +60,12 @@ public class PanierMB implements Serializable {
 			this.panier.setListe(new ArrayList<LigneCommande>());
 			maSession.setAttribute("panier", panier);
 		}
+		System.out.println("ble");
+		if (maSession.getAttribute("total") != null) {
+			System.out.println("blo");
+			total = (double) maSession.getAttribute("total");
+		}
+		System.out.println("bla");
 
 	}
 
@@ -94,17 +101,27 @@ public class PanierMB implements Serializable {
 		this.client = client;
 	}
 
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	// Méthodes métier
+
 	public String valider() {
-		client=clientService.addClient(client);
+		client = clientService.addClient(client);
 		Date date = new Date();
 		Commande commande = new Commande(date);
 		commande.setListeLigneCommande(panier.getListe());
 		commandeService.addCommande(commande, client);
-		return "home";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("La commande a bien été validée."));
+		return "panier";
 	}
 
 	public String augmenter() {
-		// TODO : rajouter les contraintes de quantité
 		Produit produit = produitService.getProduitById(id);
 		boolean existe = false;
 		for (LigneCommande ligneP : panier.getListe()) {
@@ -112,6 +129,7 @@ public class PanierMB implements Serializable {
 			if (produitCompare.getId() == produit.getId()) {
 				if (produit.getQuantite() > ligneP.getQuantite()) {
 					ligneP.setQuantite(ligneP.getQuantite() + 1);
+					ligneP.setTotal(ligneP.getQuantite() * ligneP.getPrix());
 				} else {
 					FacesContext.getCurrentInstance().addMessage(null,
 							new FacesMessage("Vous ne pouvez plus rajouter de ce produit."));
@@ -125,14 +143,18 @@ public class PanierMB implements Serializable {
 			ligne.setQuantite(1);
 			ligne.setPrix(produit.getPrix());
 			panier.getListe().add(ligne);
+			ligne.setTotal(ligne.getQuantite() * ligne.getPrix());
 		}
-		System.out.println(ligne);
-		System.out.println(panier);
+		total = 0;
+		for (LigneCommande ligne : panier.getListe()) {
+			total += ligne.getTotal();
+		}
+		maSession.setAttribute("total", total);
+		System.out.println(total);
 		return "home";
 	}
 
 	public String diminuer() {
-		// TODO :tester messages d'erreur
 		Produit produit = produitService.getProduitById(id);
 		boolean existe = false;
 		for (LigneCommande ligneP : panier.getListe()) {
@@ -150,9 +172,14 @@ public class PanierMB implements Serializable {
 		if (existe == false) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Vous n'aviez pas sélectionné ce produit."));
+		} else {
+			ligne.setTotal((double) ligne.getQuantite() * ligne.getPrix());
 		}
-		System.out.println(ligne);
-		System.out.println(panier);
+		total = 0;
+		for (LigneCommande ligne : panier.getListe()) {
+			total += ligne.getTotal();
+		}
+		maSession.setAttribute("total", total);
 		return "home";
 	}
 }
