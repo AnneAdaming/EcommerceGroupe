@@ -43,12 +43,12 @@
 			<span class="ui-separator">
 				<span class="ui-icon ui-icon-grip-dotted-vertical" />
 			</span>
-			<p:commandButton value="Rechecher" action="#{affichageHomeMB.afficherCategories}" />
+			<p:commandButton  value="Rechercher" actionListener="#{affichageHomeMB.rechercherProduits()}" />
 		</h:panelGrid>
 	</h:form>
 
 	<h:form>
-		<p:dataGrid var="prod" value="#{produitMB.listeProduits}" columns="3"
+		<p:dataGrid var="prod" value="#{affichageHomeMB.listeProduits}" columns="3"
 			layout="grid" rows="12" paginator="true" id="prods"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="6,12,16">
