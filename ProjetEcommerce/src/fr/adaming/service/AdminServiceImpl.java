@@ -14,4 +14,8 @@ public class AdminServiceImpl implements IAdminService {
 	public Admin getAdmin(String email, String mdp) {
 		return adminDao.getAdmin(email, mdp);
 	}
+	@Override
+	public Admin addAdmin(Admin ad) {
+		return adminDao.addAdmin(ad);
+	}
 }

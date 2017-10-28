@@ -19,4 +19,9 @@ public class AdminDaoImpl implements IAdminDao {
 		query.setParameter("pMdp", mdp);
 		return (Admin) query.getSingleResult();
 	}
+	@Override
+	public Admin addAdmin(Admin ad) {
+		em.persist(ad);
+		return ad;
+	}
 }

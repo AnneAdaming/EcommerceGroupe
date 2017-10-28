@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="commandes")
@@ -24,6 +26,7 @@ public class Commande implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_co")
 	private long id;
+	@Temporal(TemporalType.DATE)
 	@Column(name="date_co")
 	private Date date;
 	@ManyToOne

@@ -20,6 +20,8 @@
 				<p:link value="Supprimer Produit" outcome="suppr_produit.xhtml"></p:link>
 				 | 
 				<p:link value="Voir le panier" outcome="panier.xhtml"></p:link>
+				 | 
+				<p:commandButton value="Remplir DB" action="#{creationDonneesMB.remplirDB()}" />
 			</p:menuitem>
 		</p:menubar>
 	</h:form>
@@ -35,8 +37,8 @@
 			<p:outputLabel value="Catégories : " />
 			<p:selectManyCheckbox value="#{affichageHomeMB.selectedCategories}">
 				<f:selectItem itemValue="1" itemLabel="Cookies" />
-				<f:selectItem itemValue="2" itemLabel="Armes" />
-				<f:selectItem itemValue="3" itemLabel="Drogues" />
+				<f:selectItem itemValue="2" itemLabel="Drogues" />
+				<f:selectItem itemValue="3" itemLabel="Armes" />
 			</p:selectManyCheckbox>
 			<span class="ui-separator">
 				<span class="ui-icon ui-icon-grip-dotted-vertical" />

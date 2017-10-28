@@ -6,4 +6,5 @@ import fr.adaming.model.Admin;
 @Local
 public interface IAdminDao {
 	Admin getAdmin(String email, String mdp);
+	Admin addAdmin(Admin ad);
 }

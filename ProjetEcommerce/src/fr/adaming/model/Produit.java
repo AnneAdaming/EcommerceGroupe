@@ -27,12 +27,12 @@ public class Produit implements Serializable {
 	private String designation;
 	@Column(name="description_pr")
 	private String description;
+	@Column(name="imageURL_pr")
+	private String imageURL;
 	@Column(name="prix_pr")
 	private double prix;
 	@Column(name="quantite_pr")
 	private int quantite;
-	@Column(name="selectionne_pr",columnDefinition="TINYINT(1)")
-	private boolean selectionne;
 	@ManyToOne
 	@JoinColumn(name="id_ca", referencedColumnName="id_ca")
 	private Categorie categorie;
@@ -43,22 +43,22 @@ public class Produit implements Serializable {
 	public Produit() {
 		super();
 	}
-	public Produit(String designation, String description, double prix, int quantite, boolean selectionne) {
+	public Produit(String designation, String description, String imageURL, double prix, int quantite) {
 		super();
 		this.designation = designation;
 		this.description = description;
+		this.imageURL = imageURL;
 		this.prix = prix;
 		this.quantite = quantite;
-		this.selectionne = selectionne;
 	}
-	public Produit(long id, String designation, String description, double prix, int quantite, boolean selectionne) {
+	public Produit(long id, String designation, String description, String imageURL, double prix, int quantite) {
 		super();
 		this.id = id;
 		this.designation = designation;
 		this.description = description;
+		this.imageURL = imageURL;
 		this.prix = prix;
 		this.quantite = quantite;
-		this.selectionne = selectionne;
 	}
 	
 	//Getters et setters
@@ -80,6 +80,12 @@ public class Produit implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 	public double getPrix() {
 		return prix;
 	}
@@ -91,12 +97,6 @@ public class Produit implements Serializable {
 	}
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
-	}
-	public boolean isSelectionne() {
-		return selectionne;
-	}
-	public void setSelectionne(boolean selectionne) {
-		this.selectionne = selectionne;
 	}
 	
 	public Categorie getCategorie() {
@@ -114,8 +114,7 @@ public class Produit implements Serializable {
 	//Méthodes propres
 	@Override
 	public String toString() {
-		return "Produit [id=" + id + ", designation=" + designation + ", description=" + description + ", prix=" + prix
-				+ ", quantite=" + quantite + ", selectionne=" + selectionne + "]";
+		return "Produit [id=" + id + ", designation=" + designation + ", description=" + description
+				+ ", imageURL=" + imageURL + ", prix=" + prix + ", quantite=" + quantite + "]";
 	}
-	
 }

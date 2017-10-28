@@ -23,6 +23,8 @@ public class Client implements Serializable {
 	private long id;
 	@Column(name="nom_cl")
 	private String nom;
+	@Column(name="prenom_cl")
+	private String prenom;
 	@Column(name="adresse_cl")
 	private String adresse;
 	@Column(name="email_cl")
@@ -36,17 +38,19 @@ public class Client implements Serializable {
 	public Client() {
 		super();
 	}
-	public Client(String nom, String adresse, String email, String telephone) {
+	public Client(String nom, String prenom, String adresse, String email, String telephone) {
 		super();
 		this.nom = nom;
+		this.prenom = prenom;
 		this.adresse = adresse;
 		this.email = email;
 		this.telephone = telephone;
 	}
-	public Client(int id, String nom, String adresse, String email, String telephone) {
+	public Client(int id, String nom, String prenom, String adresse, String email, String telephone) {
 		super();
 		this.id = id;
 		this.nom = nom;
+		this.prenom = prenom;
 		this.adresse = adresse;
 		this.email = email;
 		this.telephone = telephone;
@@ -61,6 +65,12 @@ public class Client implements Serializable {
 	}
 	public String getNom() {
 		return nom;
+	}
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -92,7 +102,7 @@ public class Client implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", telephone="
+		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", email=" + email + ", telephone="
 				+ telephone + "]";
 	}
 }
