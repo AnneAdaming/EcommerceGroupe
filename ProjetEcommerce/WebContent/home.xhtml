@@ -12,10 +12,13 @@
 	<h:form id="login">
 		<p:menubar>
 			<p:menuitem>
-				<p:commandButton value="Login" actionListener="#{adminMB.login}" />
+				<p:commandButton value="Login" actionListener="#{adminMB.login()}" />
 				<p:link value="Ajouter Produit" outcome="ajout_produit.xhtml"></p:link>
+				 | 
 				<p:link value="Modifier Produit" outcome="modif_produit.xhtml"></p:link>
+				 | 
 				<p:link value="Supprimer Produit" outcome="suppr_produit.xhtml"></p:link>
+				 | 
 				<p:link value="Voir le panier" outcome="panier.xhtml"></p:link>
 			</p:menuitem>
 		</p:menubar>
@@ -23,64 +26,63 @@
 	<h:form>
 	</h:form>
 
-	<h:form id="searchbar">
-		<!-- 		<h:panelGrid columns="2" cellpadding="5"> -->
-		<!-- 			<h:outputLabel for="multiple" value="Multiple:" /> -->
-		<!-- 			<p:selectCheckboxMenu id="multiple" -->
-		<!-- 				value="#{checkboxView.selectedCities2}" label="Categories" -->
-		<!-- 				multiple="true" filter="true" filterMatchMode="startsWith" -->
-		<!-- 				panelStyle="width:250px"> -->
-		<!-- 				<f:selectItems value="#{checkboxView.cities}" /> -->
-		<!-- 			</p:selectCheckboxMenu> -->
-		<!-- 		</h:panelGrid> -->
-		<p:selectOneMenu id="categorie" style="width:150px">
-			<p:ajax listener="#{categorieMB.onCategorieChange}" />
-			<!-- 			<f:selectItem itemLabel="Select Categorie" itemValue="" noSelectionOption="true" /> -->
-			<!-- 			<f:selectItems value="#{categorieMB.mapCategories}" /> -->
-		</p:selectOneMenu>
-		<p:commandButton value="Rechercher"
-			actionListener="#{produitMB.rechercherProduits}">
-			<f:setPropertyActionListener target="#{produitMB.idCategorieChoisie}"
-				value="#{categorieMB.idCategorieChoisie}" />
-		</p:commandButton>
+	<h:form>
+		<h:panelGrid columns="6">
+			<p:autoComplete value="#{affichageHomeMB.valueBarreRecherche}" completeMethod="#{affichageHomeMB.getListeNomProduits()}" placeholder="Recherche..." />
+			<span class="ui-separator">
+				<span class="ui-icon ui-icon-grip-dotted-vertical" />
+			</span>
+			<p:outputLabel value="Catégories : " />
+			<p:selectManyCheckbox value="#{affichageHomeMB.selectedCategories}">
+				<f:selectItem itemValue="1" itemLabel="Cookies" />
+				<f:selectItem itemValue="2" itemLabel="Armes" />
+				<f:selectItem itemValue="3" itemLabel="Drogues" />
+			</p:selectManyCheckbox>
+			<span class="ui-separator">
+				<span class="ui-icon ui-icon-grip-dotted-vertical" />
+			</span>
+			<p:commandButton value="Rechecher" action="#{affichageHomeMB.afficherCategories}" />
+		</h:panelGrid>
 	</h:form>
 
-<h:form>
-	<p:dataGrid var="prod" value="#{produitMB.listeProduits}" columns="3"
-		layout="grid" rows="12" paginator="true" id="prods"
-		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="6,12,16">
-		<f:facet name="header">
-            	Produits
+	<h:form>
+		<p:dataGrid var="prod" value="#{produitMB.listeProduits}" columns="3"
+			layout="grid" rows="12" paginator="true" id="prods"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="6,12,16">
+			<f:facet name="header">
+				<p:outputLabel value="Produits" />
         	</f:facet>
-		<p:panel header="#{prod.designation}" style="text-align:center">
-			<h:panelGrid columns="2" style="width:100%">
-				
+			<p:panel header="#{prod.designation}" style="text-align:center">
+				<h:panelGrid columns="2" style="width:100%">
+
 					<h:outputText value="#{prod.description}" />
 					<h:outputText value="#{prod.prix}" />
 
 					<h:outputText value="#{prod.id}" />
 					<h:outputText value="#{prod.quantite}" />
 
-					
-					<p:commandButton value="+1" action="#{panierMB.augmenter}" update=":message">
+
+					<p:commandButton value="+1" action="#{panierMB.augmenter}"
+						update=":message">
 						<f:setPropertyActionListener target="#{panierMB.id}"
 							value="#{prod.id}" />
 					</p:commandButton>
-					<p:commandButton value="-1" action="#{panierMB.diminuer}" update=":message">
+					<p:commandButton value="-1" action="#{panierMB.diminuer}"
+						update=":message">
 						<f:setPropertyActionListener target="#{panierMB.id}"
 							value="#{prod.id}" />
 					</p:commandButton>
 
 					<p:commandButton value="Modifier Produit"
 						action="modif_produit.xhtml"></p:commandButton>
-				
-			</h:panelGrid>
-		</p:panel>
-	</p:dataGrid>
-</h:form>
 
-<p:growl id="message"></p:growl>
+				</h:panelGrid>
+			</p:panel>
+		</p:dataGrid>
+	</h:form>
+
+	<p:growl id="message"></p:growl>
 
 </h:body>
 </html>

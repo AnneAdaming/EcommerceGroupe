@@ -25,7 +25,7 @@ public class ProduitMB implements Serializable {
 	private IProduitService produitService;
 	@EJB
 	private ICategorieService categorieService;
-
+	
 	private List<Produit> listeProduits;
 	private Categorie categorie;
 	private Produit produit;
@@ -34,44 +34,38 @@ public class ProduitMB implements Serializable {
 	public ProduitMB() {
 		produit=new Produit();
 	}
-
-	public List<Produit> getListeProduits() {
-		return listeProduits;
-	}
-
-	public void setListeProduits(List<Produit> listeProduits) {
-		this.listeProduits = listeProduits;
-	}
-
-	public Categorie getCategorie() {
-		return categorie;
-	}
-
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
-	}
-
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public long getIdCategorie() {
-		return idCategorie;
-	}
-
-	public void setIdCategorie(long idCategorie) {
-		this.idCategorie = idCategorie;
-	}
-
 	@PostConstruct
 	private void init() {
 		this.listeProduits = produitService.getAllProduit();
 	}
+	
+	// Getters / Setters
+	public List<Produit> getListeProduits() {
+		return listeProduits;
+	}
+	public void setListeProduits(List<Produit> listeProduits) {
+		this.listeProduits = listeProduits;
+	}
+	public Categorie getCategorie() {
+		return categorie;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+	public Produit getProduit() {
+		return produit;
+	}
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
+	public long getIdCategorie() {
+		return idCategorie;
+	}
+	public void setIdCategorie(long idCategorie) {
+		this.idCategorie = idCategorie;
+	}
 
+	// Methodes
 	public String modifierProduit() {
 		categorie=categorieService.getCategorieById(idCategorie);
 		produit.setCategorie(categorie);
@@ -83,7 +77,6 @@ public class ProduitMB implements Serializable {
 			return "ajout_produit";
 		}
 	}
-	
 	public String ajouterProduit() {
 		categorie=categorieService.getCategorieById(idCategorie);
 		produit=produitService.addProduit(produit, categorie);
@@ -94,9 +87,13 @@ public class ProduitMB implements Serializable {
 			return "ajout_produit";
 		}
 	}
-	
 	public String supprimerProduit() {
 		produitService.deleteProduit(produit);
+		return "home";
+	}
+	
+	public String rechercherProduits() {
+		System.out.println("rechercher produits");
 		return "home";
 	}
 }
