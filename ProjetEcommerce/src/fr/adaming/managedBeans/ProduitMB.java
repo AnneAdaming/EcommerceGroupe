@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -17,7 +17,7 @@ import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IProduitService;
 
 @ManagedBean(name = "produitMB")
-@RequestScoped
+@SessionScoped
 public class ProduitMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,7 @@ public class ProduitMB implements Serializable {
 	private Categorie categorie;
 	private Produit produit;
 	private long idCategorie;
+	private long idProduit;
 
 	public ProduitMB() {
 		produit=new Produit();
@@ -65,8 +66,16 @@ public class ProduitMB implements Serializable {
 		this.idCategorie = idCategorie;
 	}
 
+	public long getIdProduit() {
+		return idProduit;
+	}
+	public void setIdProduit(long idProduit) {
+		this.idProduit = idProduit;
+	}
 	// Methodes
 	public String modifierProduit() {
+		System.out.println("le produit est le " +idProduit);
+		produit.setId(idProduit);
 		categorie=categorieService.getCategorieById(idCategorie);
 		produit.setCategorie(categorie);
 		produit=produitService.modifyProduit(produit);
@@ -88,6 +97,7 @@ public class ProduitMB implements Serializable {
 		}
 	}
 	public String supprimerProduit() {
+		System.out.println("le produit supprimé est le "+produit);
 		produitService.deleteProduit(produit);
 		return "home";
 	}
