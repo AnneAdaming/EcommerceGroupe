@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -15,29 +16,49 @@ import fr.adaming.model.Produit;
 import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IProduitService;
 
-@ManagedBean(name="affichageHomeMB")
+@ManagedBean(name="afficheurHomeMB")
 @SessionScoped
-public class AffichageHomeMB implements Serializable {
+public class AfficheurHomeMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private IProduitService produitService;
 	@EJB
 	private ICategorieService categorieService;
-	public List<Produit> listeProduits = new ArrayList<Produit>();
-	public String[] selectedCategories = {"1", "2", "3"};
-	public String valueBarreRecherche;
+	private List<Categorie> listeCategories = new ArrayList<Categorie>();
+	private List<Produit> selectedProduits = new ArrayList<Produit>();
+	private String[] selectedNomCategories;
+	private String valueBarreRecherche;
 	
 	// Constructeur
-	public AffichageHomeMB() {
+	public AfficheurHomeMB() {
 		super();
+	}
+	@PostConstruct
+	public void init() {
+		selectedProduits = produitService.getAllProduit();
+		listeCategories = categorieService.getAllCategorie();
+		List<Categorie> cats = categorieService.getAllCategorie();
+//		selectedCategories = (String[]) categorieService.getAllCategorie().toArray();
 	}
 	
 	// Getters / Setters
-	public String[] getSelectedCategories() {
-		return selectedCategories;
+	public List<Categorie> getListeCategories() {
+		return listeCategories;
 	}
-	public void setSelectedCategories(String[] selectedCategories) {
-		this.selectedCategories = selectedCategories;
+	public void setListeCategories(List<Categorie> listeCategories) {
+		this.listeCategories = listeCategories;
+	}
+	public List<Produit> getSelectedProduits() {
+		return selectedProduits;
+	}
+	public void setSelectedProduits(List<Produit> selectedProduits) {
+		this.selectedProduits = selectedProduits;
+	}
+	public String[] getSelectedNomCategories() {
+		return selectedNomCategories;
+	}
+	public void setSelectedNomCategories(String[] selectedCategories) {
+		this.selectedNomCategories = selectedCategories;
 	}
 	public String getValueBarreRecherche() {
 		return valueBarreRecherche;
@@ -45,28 +66,22 @@ public class AffichageHomeMB implements Serializable {
 	public void setValueBarreRecherche(String valueBarreRecherche) {
 		this.valueBarreRecherche = valueBarreRecherche;
 	}
-	public List<Produit> getListeProduits() {
-		return listeProduits;
-	}
-	public void setListeProduits(List<Produit> listeProduits) {
-		this.listeProduits = listeProduits;
-	}
-
+	
 	// Methodes
 	public String rechercherProduits() {
 		List<Categorie> categories = new ArrayList<Categorie>();
-		for (String idCategorie : selectedCategories) {
+		for (String idCategorie : selectedNomCategories) {
 			long id = Long.parseLong(idCategorie);
 			Categorie categorie = categorieService.getCategorieById(id);
 			categories.add(categorie);
 		}
-		listeProduits = produitService.getAllProduitByCategories(categories);
+		selectedProduits = produitService.getAllProduitByCategories(categories);
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "home";
+		return "";
 	}
 	public List<String> getListeNomProduits() {
 		List<String> nomProduits = new ArrayList<String>();
