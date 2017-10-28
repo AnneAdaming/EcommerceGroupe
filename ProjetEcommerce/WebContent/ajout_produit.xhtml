@@ -26,10 +26,12 @@
         <p:outputLabel for="categorieId" value="Catégorie :" />
         <p:inputMask id="categorieId" value="#{produitMB.idCategorie}"/>
          
-        <p:commandButton action="#{produitMB.ajouterProduit}" value="Ajouter le produit">
+        <p:commandButton action="#{produitMB.ajouterProduit}" value="Ajouter le produit" update=":message">
     	</p:commandButton>
 	</h:panelGrid>
 </h:form>
+
+<p:growl id="message"></p:growl>
 
 </h:body>
 </html>

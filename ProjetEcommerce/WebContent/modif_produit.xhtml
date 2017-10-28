@@ -9,5 +9,36 @@
 	<title>Modification Produit</title>
 </h:head>
 <h:body>
+
+	<h:form>
+		<h:panelGrid columns="2">
+			<p:outputLabel for="ID" value="ID du produit à modifier : " />
+			<p:inputMask id="ID"
+				value="#{produitMB.produit.id}" />
+
+			<p:outputLabel for="designationID" value="Désignation : " />
+			<p:inputMask id="designationID"
+				value="#{produitMB.produit.designation}" />
+
+			<p:outputLabel for="descriptionID" value="Description :" />
+			<p:inputMask id="descriptionID"
+				value="#{produitMB.produit.description}" />
+
+			<p:outputLabel for="prixId" value="Prix :" />
+			<p:inputMask id="prixId" value="#{produitMB.produit.prix}" />
+
+			<p:outputLabel for="quantiteId" value="Quantité :" />
+			<p:inputMask id="quantiteId" value="#{produitMB.produit.quantite}" />
+
+			<p:outputLabel for="categorieId" value="Catégorie :" />
+			<p:inputMask id="categorieId" value="#{produitMB.idCategorie}" />
+
+			<p:commandButton action="#{produitMB.modifierProduit}"
+				value="Modifier le produit" update=":message">
+			</p:commandButton>
+		</h:panelGrid>
+	</h:form>
+
+	<p:growl id="message"></p:growl>
 </h:body>
 </html>

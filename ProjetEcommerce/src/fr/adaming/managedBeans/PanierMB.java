@@ -60,12 +60,9 @@ public class PanierMB implements Serializable {
 			this.panier.setListe(new ArrayList<LigneCommande>());
 			maSession.setAttribute("panier", panier);
 		}
-		System.out.println("ble");
 		if (maSession.getAttribute("total") != null) {
-			System.out.println("blo");
 			total = (double) maSession.getAttribute("total");
 		}
-		System.out.println("bla");
 
 	}
 
@@ -150,7 +147,6 @@ public class PanierMB implements Serializable {
 			total += ligne.getTotal();
 		}
 		maSession.setAttribute("total", total);
-		System.out.println(total);
 		return "home";
 	}
 

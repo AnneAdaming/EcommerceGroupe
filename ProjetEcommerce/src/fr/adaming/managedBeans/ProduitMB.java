@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import fr.adaming.model.Categorie;
 import fr.adaming.model.Produit;
+import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IProduitService;
 
 @ManagedBean(name = "produitMB")
@@ -20,6 +23,8 @@ public class ProduitMB implements Serializable {
 
 	@EJB
 	private IProduitService produitService;
+	@EJB
+	private ICategorieService categorieService;
 
 	private List<Produit> listeProduits;
 	private Categorie categorie;
@@ -67,13 +72,31 @@ public class ProduitMB implements Serializable {
 		this.listeProduits = produitService.getAllProduit();
 	}
 
-	public void rechercherProduits() {
-		
+	public String modifierProduit() {
+		categorie=categorieService.getCategorieById(idCategorie);
+		produit.setCategorie(categorie);
+		produit=produitService.modifyProduit(produit);
+		if(produit!=null) {
+			return "home";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de la modification du produit."));
+			return "ajout_produit";
+		}
 	}
 	
 	public String ajouterProduit() {
-		System.out.println(produit);
-		System.out.println(idCategorie);
-		return null;
+		categorie=categorieService.getCategorieById(idCategorie);
+		produit=produitService.addProduit(produit, categorie);
+		if(produit!=null) {
+			return "home";
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de l'ajout du produit."));
+			return "ajout_produit";
+		}
+	}
+	
+	public String supprimerProduit() {
+		produitService.deleteProduit(produit);
+		return "home";
 	}
 }

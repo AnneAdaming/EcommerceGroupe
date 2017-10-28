@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import fr.adaming.model.Categorie;
@@ -20,9 +22,11 @@ public class CategorieMB implements Serializable {
 	
 	@EJB
 	private ICategorieService categorieService;
+	
 	private String[] selectedNomCategories;
 	private List<String> listeNomCategories;
 	private List<Categorie> listeCategories;
+	private Categorie categorie;
 
 	public CategorieMB() {
 		super();
@@ -46,6 +50,12 @@ public class CategorieMB implements Serializable {
 	public void setListeCategories(List<Categorie> listeCategories) {
 		this.listeCategories = listeCategories;
 	}
+	public Categorie getCategorie() {
+		return categorie;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -61,4 +71,16 @@ public class CategorieMB implements Serializable {
     public void onCategorieChange(ActionEvent actionEvent) {
     	System.out.println("categorie changed");
     }
+    
+    public String ajouterCategorie() {
+    	categorie=categorieService.addCategorie(categorie);
+    	if(categorie!=null) {
+    		return "home";
+    	}else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de l'ajout de la catégorie."));
+			return "ajout_categorie";
+		}
+    }
+    
+    
 }

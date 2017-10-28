@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Login</title>
+	<title>Accueil</title>
 </h:head>
 <h:body>
 	<h:form id="login">
@@ -14,6 +14,8 @@
 			<p:menuitem>
 				<p:commandButton value="Login" actionListener="#{adminMB.login}" />
 				<p:link value="Ajouter Produit" outcome="ajout_produit.xhtml"></p:link>
+				<p:link value="Modifier Produit" outcome="modif_produit.xhtml"></p:link>
+				<p:link value="Supprimer Produit" outcome="suppr_produit.xhtml"></p:link>
 				<p:link value="Voir le panier" outcome="panier.xhtml"></p:link>
 			</p:menuitem>
 		</p:menubar>
