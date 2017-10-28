@@ -18,15 +18,30 @@
 				<p:menuitem value="Modifier Produit" url="modif_produit.xhtml" />
 			</c:if>
 			<f:facet name="options">
+				<p:commandButton value="Remplir DB" action="#{createurDonneesMB.remplirDB()}" />
 				<c:if test="#{adminMB.logged!=true}">
-					<p:commandButton value="Login" actionListener="#{adminMB.login()}" style="margin-right:10px" />
+<!-- 					<p:commandButton value="Login" actionListener="#{adminMB.login()}" style="margin-right:10px" /> -->
+					<p:commandButton value="Login" onclick="PF('loginDialog').show();" style="margin-right:10px" />
+<!-- 					<h:outputLink value="javascript:void(0)" onclick="PF('loginDialog').show();" title="login"> -->
+<!-- 						<p:outputLabel value="Login" /> -->
+<!-- 					</h:outputLink> -->
 				</c:if>
 				<c:if test="#{adminMB.logged==true}">
-					<p:outputLabel value="#{adminMB.admin.email}" style="margin-right:10px" />
+					<p:outputLabel value="#{adminMB.email}" style="margin-right:10px" />
 					<p:commandButton value="Logout" actionListener="#{adminMB.logout()}" icon="ui-icon-extlink" />
 				</c:if>
         	</f:facet>
 		</p:menubar>
+	</h:form>
+	
+	<h:form>
+		<p:dialog header="Login" widgetVar="loginDialog" modal="true" resizable="false">
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:inputText value="#{adminMB.email}" placeholder="Adresse Mail" required="true" />
+				<p:password value="#{adminMB.mdp}" placeholder="Mot de Passe" required="true" />
+			</h:panelGrid>
+			<p:commandButton value="Login" action="#{adminMB.login()}" />
+		</p:dialog>
 	</h:form>
 
 	<h:form>
@@ -49,10 +64,10 @@
 	</h:form>
 
 	<h:form>
-		<p:dataGrid var="prod" value="#{afficheurHomeMB.selectedProduits}" columns="3"
+		<p:dataGrid var="prod" value="#{afficheurHomeMB.selectedProduits}" columns="2"
 			layout="grid" rows="12" paginator="true" id="prods"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="6,12,16">
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="4,6,8">
 			<f:facet name="header">
 				<p:outputLabel value="Produits" />
         	</f:facet>

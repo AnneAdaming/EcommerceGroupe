@@ -17,9 +17,9 @@ import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IClientService;
 import fr.adaming.service.IProduitService;
 
-@ManagedBean(name="creationDonneesMB")
+@ManagedBean(name="createurDonneesMB")
 @SessionScoped
-public class CreationDonneesMB implements Serializable {
+public class CreateurDonneesMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private IAdminService adminService;
@@ -31,7 +31,7 @@ public class CreationDonneesMB implements Serializable {
 	private IProduitService produitService;
 	
 	// Constructeur
-	public CreationDonneesMB() {
+	public CreateurDonneesMB() {
 		super();
 	}
 	

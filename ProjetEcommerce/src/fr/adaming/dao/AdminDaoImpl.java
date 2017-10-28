@@ -2,6 +2,7 @@ package fr.adaming.dao;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import fr.adaming.model.Admin;
@@ -17,7 +18,13 @@ public class AdminDaoImpl implements IAdminDao {
 		Query query = em.createQuery(request);
 		query.setParameter("pEmail", email);
 		query.setParameter("pMdp", mdp);
-		return (Admin) query.getSingleResult();
+		Admin admin = null;
+		try {
+			admin = (Admin) query.getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		return admin;
 	}
 	@Override
 	public Admin addAdmin(Admin ad) {
