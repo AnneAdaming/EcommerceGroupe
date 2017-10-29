@@ -74,17 +74,17 @@ public class ProduitMB implements Serializable {
 	}
 	// Methodes
 	public String modifierProduit() {
-		System.out.println("le produit est le " +idProduit);
+		System.out.println("le produit est " +produit);
 		produit.setId(idProduit);
+		System.out.println(idProduit);
+		System.out.println("le produit est " +produit);
 		categorie=categorieService.getCategorieById(idCategorie);
 		produit.setCategorie(categorie);
 		produit=produitService.modifyProduit(produit);
-		if(produit!=null) {
-			return "home";
-		} else {
+		if(produit==null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de la modification du produit."));
-			return "ajout_produit";
 		}
+		return "home";
 	}
 	public String ajouterProduit() {
 		categorie=categorieService.getCategorieById(idCategorie);
@@ -97,7 +97,7 @@ public class ProduitMB implements Serializable {
 		}
 	}
 	public String supprimerProduit() {
-		System.out.println("le produit supprimé est le "+produit);
+		produit.setId(idProduit);
 		produitService.deleteProduit(produit);
 		return "home";
 	}

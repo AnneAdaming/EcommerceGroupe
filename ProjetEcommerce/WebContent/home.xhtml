@@ -87,7 +87,9 @@
 							<f:setPropertyActionListener target="#{panierMB.id}" value="#{prod.id}" />
 						</p:commandButton>
 						<c:if test="#{adminMB.logged==true}">
-							<p:commandButton value="Modifier Produit" action="modif_produit.xhtml"></p:commandButton>
+							<p:commandButton value="Modifier Produit" onclick="PF('modifDialog').show();">
+								<f:setPropertyActionListener target="#{produitMB.idProduit}" value="#{prod.id}" />
+							</p:commandButton>
 							<p:commandButton value="Supprimer Produit" action="#{produitMB.supprimerProduit}">
 								<f:setPropertyActionListener target="#{produitMB.idProduit}" value="#{prod.id}" />
 							</p:commandButton>
@@ -96,6 +98,21 @@
 				</h:panelGrid>
 			</p:panel>
 		</p:dataGrid>
+	</h:form>
+	
+	<h:form>
+		<p:dialog header="Modification du produit" widgetVar="modifDialog" modal="true" resizable="false">
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:inputText value="#{produitMB.produit.designation}" placeholder="Désignation" required="true" />
+				<p:inputText value="#{produitMB.produit.description}" placeholder="Description" required="true" />
+				<p:inputText value="#{produitMB.produit.prix}" placeholder="Prix" required="true" />
+				<p:inputText value="#{produitMB.produit.quantite}" placeholder="Quantité" required="true" />
+				<p:inputText value="#{produitMB.produit.categorie}" placeholder="Catégorie" required="true" />
+			</h:panelGrid>
+			<p:commandButton value="Modifier" action="#{produitMB.modifierProduit()}" >
+				
+			</p:commandButton>
+		</p:dialog>
 	</h:form>
 
 	<p:growl id="message"></p:growl>
