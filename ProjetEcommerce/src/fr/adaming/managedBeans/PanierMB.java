@@ -1,5 +1,6 @@
 package fr.adaming.managedBeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import fr.adaming.model.Panier;
 import fr.adaming.model.Produit;
 import fr.adaming.service.IClientService;
 import fr.adaming.service.ICommandeService;
+import fr.adaming.service.ILigneCommandeService;
 import fr.adaming.service.IProduitService;
 import fr.adaming.service.ProduitServiceImpl;
 
@@ -45,6 +47,8 @@ public class PanierMB implements Serializable {
 	private ICommandeService commandeService;
 	@EJB
 	private IClientService clientService;
+	@EJB
+	private ILigneCommandeService ligneCommandeService;
 
 	HttpSession maSession;
 
@@ -73,56 +77,47 @@ public class PanierMB implements Serializable {
 	public Panier getPanier() {
 		return panier;
 	}
-
 	public void setPanier(Panier panier) {
 		this.panier = panier;
 	}
-
 	public LigneCommande getLigne() {
 		return ligne;
 	}
-
 	public void setLigne(LigneCommande ligne) {
 		this.ligne = ligne;
 	}
-
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	public Client getClient() {
 		return client;
 	}
-
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
 	public double getTotal() {
 		return total;
 	}
-
 	public void setTotal(double total) {
 		this.total = total;
 	}
 
 	// Méthodes métier
-
 	public String valider() {
 		client = clientService.addClient(client);
 		Date date = new Date();
 		Commande commande = new Commande(date);
 		commande.setListeLigneCommande(panier.getListe());
-		commandeService.addCommande(commande, client);
+		commande = commandeService.addCommande(commande, client);
 		for (LigneCommande l:panier.getListe()) {
-			Produit produit=l.getProduit();
-			int qte=produit.getQuantite()-l.getQuantite();
+			Produit produit = l.getProduit();
+			int qte = produit.getQuantite() - l.getQuantite();
 			produit.setQuantite(qte);
-			produitService.modifyProduit(produit);
+			produit = produitService.modifyProduit(produit);
+			ligneCommandeService.addLigneCommande(l, commande, produit);
 		}
 
 		final String username = "thezadzad@gmail.com";
@@ -148,7 +143,7 @@ public class PanierMB implements Serializable {
 			sb.append("Vous avez passé une commande pour :\n");
 			for (LigneCommande l:panier.getListe()) {
 				Produit produit = l.getProduit();
-				sb.append(" - " + produit.getQuantite() + " " + produit.getDesignation() + "\n");
+				sb.append(" - " + l.getQuantite() + " " + produit.getDesignation() + "\n");
 			}
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
@@ -159,6 +154,10 @@ public class PanierMB implements Serializable {
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
+		this.ligne = new LigneCommande();
+		this.client = new Client();
+		panier.setListe(null);
+		maSession.setAttribute("total", (double)0.0);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Un mail récapitulatif de la commande vous a été envoyé."));
 		return "panier";
 	}

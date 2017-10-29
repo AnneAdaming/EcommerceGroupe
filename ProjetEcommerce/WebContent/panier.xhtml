@@ -9,6 +9,9 @@
 	<title>Panier</title>
 </h:head>
 <h:body>
+	<h:form>
+		<p:commandButton value="Retour" action="home.xhtml" />
+	</h:form>
 	<p:dataTable var="ligne" value="#{panierMB.panier.liste}">
 		<p:column headerText="Nom">
 			<h:outputText value="#{ligne.produit.designation}" />
@@ -39,7 +42,7 @@
 			<p:outputLabel for="nom" value="Nom : " />
 			<p:inputMask id="nom"
 				value="#{panierMB.client.nom}" />
-			<p:outputLabel for="prenom" value="Preom : " />
+			<p:outputLabel for="prenom" value="Prenom : " />
 			<p:inputMask id="prenom"
 				value="#{panierMB.client.prenom}" />
 				<p:outputLabel for="adresse" value="Adresse : " />
