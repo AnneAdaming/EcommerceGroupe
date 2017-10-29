@@ -22,6 +22,32 @@
 	</h:panelGrid>
 </h:form>
 
+<h:form>
+	<h:panelGrid columns="2">
+		<p:outputLabel for="ID" value="ID : " />
+ 		<p:inputMask id="ID" value="#{categorieMB.categorie.id}"/>
+		
+		<p:outputLabel for="nomID" value="nom : " />
+ 		<p:inputMask id="nomID" value="#{categorieMB.categorie.nomCategorie}"/>
+ 
+        <p:outputLabel for="descriptionID" value="Description :" />
+ 		<p:inputMask id="descriptionID" value="#{categorieMB.categorie.description}"/>
+ 		
+        <p:commandButton action="#{categorieMB.modifierCategorie}" value="Modifier la catégorie" update=":message">
+    	</p:commandButton>
+	</h:panelGrid>
+</h:form>
+
+<h:form>
+	<h:panelGrid columns="2">
+		<p:outputLabel for="ID" value="ID : " />
+ 		<p:inputMask id="ID" value="#{categorieMB.categorie.id}"/>
+		
+		<p:commandButton action="#{categorieMB.supprimerCategorie}" value="Supprimer la catégorie" update=":message">
+    	</p:commandButton>
+	</h:panelGrid>
+</h:form>
+
 <p:growl id="message"></p:growl>
 
 </h:body>

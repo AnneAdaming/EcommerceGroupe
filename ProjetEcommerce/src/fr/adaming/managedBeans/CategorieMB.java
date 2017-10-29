@@ -23,9 +23,10 @@ public class CategorieMB implements Serializable {
 	@EJB
 	private ICategorieService categorieService;
 	public String[] selectedCategories = {"1","2","3"};
+	private Categorie categorie;
 
 	public CategorieMB() {
-		super();
+		categorie=new Categorie();
 	}
 
 	public String[] getSelectedCategories() {
@@ -33,5 +34,29 @@ public class CategorieMB implements Serializable {
 	}
 	public void setSelectedCategories(String[] selectedCategories) {
 		this.selectedCategories = selectedCategories;
+	}
+	public Categorie getCategorie() {
+		return categorie;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+	
+	public void ajouterCategorie() {
+		categorie=categorieService.addCategorie(categorie);
+		if(categorie==null) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de l'ajout de catégorie"));
+		}
+	}
+	
+	public void modifierCategorie() {
+		categorie=categorieService.modifyCategorie(categorie);
+		if(categorie==null) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de la modification de catégorie"));
+		}
+	}
+	
+	public void supprimerCategorie() {
+		categorieService.deleteCategorie(categorie);
 	}
 }
