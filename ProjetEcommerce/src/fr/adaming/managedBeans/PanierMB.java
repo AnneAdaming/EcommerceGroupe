@@ -2,8 +2,12 @@ package fr.adaming.managedBeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -120,7 +124,42 @@ public class PanierMB implements Serializable {
 			produit.setQuantite(qte);
 			produitService.modifyProduit(produit);
 		}
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("La commande a bien été validée."));
+
+		final String username = "thezadzad@gmail.com";
+		final String password = "adaming44";
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(client.getEmail()));
+			message.setSubject("Commande Ecommerce");
+			StringBuilder sb = new StringBuilder();
+			sb.append("Mme/Mr. " + client.getPrenom() + " " + client.getNom() + ",\n\n");
+			sb.append("Vous avez passé une commande pour :\n");
+			for (LigneCommande l:panier.getListe()) {
+				Produit produit = l.getProduit();
+				sb.append(" - " + produit.getQuantite() + " " + produit.getDesignation() + "\n");
+			}
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+			calendar.add(Calendar.DAY_OF_YEAR, 12);
+			sb.append("\nLa date de réception est prévue le " + calendar.getTime() + " au " + client.getAdresse());
+			message.setText(sb.toString());
+			Transport.send(message);
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Un mail récapitulatif de la commande vous a été envoyé."));
 		return "panier";
 	}
 

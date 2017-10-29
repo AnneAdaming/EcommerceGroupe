@@ -20,17 +20,28 @@
 			<h:outputText value="#{ligne.prix}" />
 		</p:column>
 		<p:column headerText="Prix total">
-			<h:outputText value="#{ligne.total}" />
+			<h:outputText value="#{ligne.total}">
+				<f:convertNumber pattern="#0.00" />
+			</h:outputText>
 		</p:column>
 	</p:dataTable>
 	
-	<p>Le total est de #{panierMB.total} euros.</p>
+	<p>
+		Le total est de
+		<h:outputText value="#{panierMB.total}">
+			<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		euros.
+	</p>
 
 	<h:form>
 		<h:panelGrid columns="2">
 			<p:outputLabel for="nom" value="Nom : " />
 			<p:inputMask id="nom"
 				value="#{panierMB.client.nom}" />
+			<p:outputLabel for="prenom" value="Preom : " />
+			<p:inputMask id="prenom"
+				value="#{panierMB.client.prenom}" />
 				<p:outputLabel for="adresse" value="Adresse : " />
 			<p:inputMask id="adresse"
 				value="#{panierMB.client.adresse}" />
