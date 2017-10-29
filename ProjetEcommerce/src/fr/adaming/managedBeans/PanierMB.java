@@ -114,6 +114,12 @@ public class PanierMB implements Serializable {
 		Commande commande = new Commande(date);
 		commande.setListeLigneCommande(panier.getListe());
 		commandeService.addCommande(commande, client);
+		for (LigneCommande l:panier.getListe()) {
+			Produit produit=l.getProduit();
+			int qte=produit.getQuantite()-l.getQuantite();
+			produit.setQuantite(qte);
+			produitService.modifyProduit(produit);
+		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("La commande a bien été validée."));
 		return "panier";
 	}

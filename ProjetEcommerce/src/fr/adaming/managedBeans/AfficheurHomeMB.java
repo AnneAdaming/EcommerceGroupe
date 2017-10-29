@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -17,7 +18,7 @@ import fr.adaming.service.ICategorieService;
 import fr.adaming.service.IProduitService;
 
 @ManagedBean(name="afficheurHomeMB")
-@SessionScoped
+@RequestScoped
 public class AfficheurHomeMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB

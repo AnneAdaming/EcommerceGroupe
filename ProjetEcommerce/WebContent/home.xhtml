@@ -15,7 +15,7 @@
 			<p:menuitem value="Voir le panier" url="panier.xhtml" />
 			<c:if test="#{adminMB.logged==true}">
 				<p:menuitem value="Ajouter Produit" url="ajout_produit.xhtml" />
-				<p:menuitem value="Modifier Produit" url="modif_produit.xhtml" />
+				<p:menuitem value="Editer Catégorie" url="ajout_categorie.xhtml" />
 			</c:if>
 			<f:facet name="options">
 				<p:commandButton value="Remplir DB" action="#{createurDonneesMB.remplirDB()}" />
@@ -87,10 +87,10 @@
 							<f:setPropertyActionListener target="#{panierMB.id}" value="#{prod.id}" />
 						</p:commandButton>
 						<c:if test="#{adminMB.logged==true}">
-							<p:commandButton value="Modifier Produit" onclick="PF('modifDialog').show();">
+							<p:commandButton value="Modifier Produit" onclick="PF('modifDialog').show();" update="@all">
 								<f:setPropertyActionListener target="#{produitMB.idProduit}" value="#{prod.id}" />
 							</p:commandButton>
-							<p:commandButton value="Supprimer Produit" action="#{produitMB.supprimerProduit}">
+							<p:commandButton value="Supprimer Produit" action="#{produitMB.supprimerProduit}" update="@all">
 								<f:setPropertyActionListener target="#{produitMB.idProduit}" value="#{prod.id}" />
 							</p:commandButton>
 						</c:if>
@@ -107,7 +107,7 @@
 				<p:inputText value="#{produitMB.produit.description}" placeholder="Description" required="true" />
 				<p:inputText value="#{produitMB.produit.prix}" placeholder="Prix" required="true" />
 				<p:inputText value="#{produitMB.produit.quantite}" placeholder="Quantité" required="true" />
-				<p:inputText value="#{produitMB.produit.categorie}" placeholder="Catégorie" required="true" />
+				<p:inputText value="#{produitMB.idCategorie}" placeholder="Catégorie" required="true" />
 			</h:panelGrid>
 			<p:commandButton value="Modifier" action="#{produitMB.modifierProduit()}" >
 				

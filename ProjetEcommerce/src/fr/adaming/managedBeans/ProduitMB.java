@@ -83,7 +83,7 @@ public class ProduitMB implements Serializable {
 		produit=produitService.modifyProduit(produit);
 		if(produit==null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de la modification du produit."));
-		}
+		} 
 		return "home";
 	}
 	public String ajouterProduit() {
