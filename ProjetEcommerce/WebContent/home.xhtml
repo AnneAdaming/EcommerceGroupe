@@ -48,7 +48,7 @@
 			</span>
 			<p:outputLabel value="Catégories : " />
 			<p:selectManyCheckbox value="#{afficheurHomeMB.selectedNomCategories}">
-				<c:forEach var="c" items="#{afficheurHomeMB.listeCategories}">
+				<c:forEach var="c" items="#{categorieMB.listeCategories}">
 					<f:selectItem itemValue="#{c.id}" itemLabel="#{c.nomCategorie}" />
 				</c:forEach>
 			</p:selectManyCheckbox>

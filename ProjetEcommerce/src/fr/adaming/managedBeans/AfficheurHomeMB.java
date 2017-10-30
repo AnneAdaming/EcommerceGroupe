@@ -22,7 +22,7 @@ public class AfficheurHomeMB implements Serializable {
 	private IProduitService produitService;
 	@EJB
 	private ICategorieService categorieService;
-	private List<Categorie> listeCategories = new ArrayList<Categorie>();
+//	private List<Categorie> listeCategories = new ArrayList<Categorie>();
 	private List<Produit> selectedProduits = new ArrayList<Produit>();
 	private String[] selectedNomCategories;
 	private String valueBarreRecherche;
@@ -33,8 +33,8 @@ public class AfficheurHomeMB implements Serializable {
 	}
 	@PostConstruct
 	public void init() {
+//		listeCategories = categorieService.getAllCategorie();
 		selectedProduits = produitService.getAllProduit();
-		listeCategories = categorieService.getAllCategorie();
 		if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedProduits") == null) {
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedProduits", this.selectedProduits);
 		}
@@ -42,12 +42,12 @@ public class AfficheurHomeMB implements Serializable {
 	}
 	
 	// Getters / Setters
-	public List<Categorie> getListeCategories() {
-		return listeCategories;
-	}
-	public void setListeCategories(List<Categorie> listeCategories) {
-		this.listeCategories = listeCategories;
-	}
+//	public List<Categorie> getListeCategories() {
+//		return listeCategories;
+//	}
+//	public void setListeCategories(List<Categorie> listeCategories) {
+//		this.listeCategories = listeCategories;
+//	}
 	public List<Produit> getSelectedProduits() {
 		return selectedProduits;
 	}

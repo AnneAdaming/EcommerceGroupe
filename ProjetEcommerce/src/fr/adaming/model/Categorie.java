@@ -3,6 +3,7 @@ package fr.adaming.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Categorie implements Serializable {
 	private String nomCategorie;
 	@Column(name="description_ca")
 	private String description;
-	@OneToMany(mappedBy="categorie")
+	@OneToMany(mappedBy="categorie", cascade=CascadeType.ALL)
 	private List<Produit> listeProduits;
 	
 	//Constructeurs

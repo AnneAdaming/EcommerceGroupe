@@ -1,6 +1,8 @@
 package fr.adaming.managedBeans;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,30 +24,41 @@ public class CategorieMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ICategorieService categorieService;
-	public String[] selectedCategories = {"1","2","3"};
+	private List<Categorie> listeCategories = new ArrayList<Categorie>();
 	private Categorie categorie;
 
 	public CategorieMB() {
 		categorie=new Categorie();
 	}
+	@PostConstruct
+	public void init() {
+		this.listeCategories = categorieService.getAllCategorie();
+	}
 
-	public String[] getSelectedCategories() {
-		return selectedCategories;
-	}
-	public void setSelectedCategories(String[] selectedCategories) {
-		this.selectedCategories = selectedCategories;
-	}
 	public Categorie getCategorie() {
 		return categorie;
 	}
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
+	public List<Categorie> getListeCategories() {
+		return listeCategories;
+	}
+	public void setListeCategories(List<Categorie> listeCategories) {
+		this.listeCategories = listeCategories;
+	}
 	
 	public void ajouterCategorie() {
 		categorie=categorieService.addCategorie(categorie);
 		if(categorie==null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de l'ajout de catégorie"));
+			return;
+		}
+		this.listeCategories = categorieService.getAllCategorie();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -53,10 +66,23 @@ public class CategorieMB implements Serializable {
 		categorie=categorieService.modifyCategorie(categorie);
 		if(categorie==null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de la modification de catégorie"));
+			return;
+		}
+		this.listeCategories = categorieService.getAllCategorie();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public void supprimerCategorie() {
 		categorieService.deleteCategorie(categorie);
+		this.listeCategories = categorieService.getAllCategorie();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
