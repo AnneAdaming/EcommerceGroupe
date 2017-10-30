@@ -12,8 +12,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import fr.adaming.model.Categorie;
+import fr.adaming.model.LigneCommande;
 import fr.adaming.model.Produit;
 import fr.adaming.service.ICategorieService;
+import fr.adaming.service.ILigneCommandeService;
 import fr.adaming.service.IProduitService;
 
 @ManagedBean(name = "produitMB")
@@ -25,6 +27,8 @@ public class ProduitMB implements Serializable {
 	private IProduitService produitService;
 	@EJB
 	private ICategorieService categorieService;
+	@EJB
+	private ILigneCommandeService ligneCommandeService;
 	
 	private List<Produit> listeProduits;
 	private Categorie categorie;
@@ -97,7 +101,32 @@ public class ProduitMB implements Serializable {
 		}
 	}
 	public String supprimerProduit() {
-		produit.setId(idProduit);
+		List<LigneCommande> listeLigneCommande = ligneCommandeService.getAllLigneCommande();
+		if (listeLigneCommande == null) {
+			return "home";
+		}
+		int i = 0;
+		while (true) {
+			int size = listeLigneCommande.size();
+			if (i == size) {
+				break;
+			}
+			if (listeLigneCommande.get(i).getProduit().getId() == this.idProduit) {
+				listeLigneCommande.remove(i);
+				i = 0;
+			}
+			i++;
+		}
+		@SuppressWarnings("unchecked")
+		List<Produit> selectedProduits = (List<Produit>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedProduits");
+		for (int j=0; j<selectedProduits.size(); j++) {
+			if (selectedProduits.get(j).getId() == idProduit) {
+				selectedProduits.remove(j);
+				break;
+			}
+		}
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedProduits", selectedProduits);
+		this.produit = produitService.getProduitById(idProduit);
 		produitService.deleteProduit(produit);
 		return "home";
 	}

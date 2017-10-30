@@ -35,6 +35,10 @@ public class AfficheurHomeMB implements Serializable {
 	public void init() {
 		selectedProduits = produitService.getAllProduit();
 		listeCategories = categorieService.getAllCategorie();
+		if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedProduits") == null) {
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedProduits", this.selectedProduits);
+		}
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().replace("selectedProduits", this.selectedProduits);
 	}
 	
 	// Getters / Setters
@@ -75,6 +79,10 @@ public class AfficheurHomeMB implements Serializable {
 		for (Produit p : selectedProduits) {
 			System.out.println("selectedProduit : " + p);
 		}
+		if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedProduits") == null) {
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedProduits", this.selectedProduits);
+		}
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().replace("selectedProduits", this.selectedProduits);
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
 		} catch (IOException e) {
