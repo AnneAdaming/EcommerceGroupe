@@ -25,6 +25,13 @@
         
         <p:outputLabel for="categorieId" value="Catégorie :" />
         <p:inputMask id="categorieId" value="#{produitMB.idCategorie}"/>
+        
+		<p:fileUpload id="fileIdPhoto"
+			fileUploadListener="#{fileUploadBean.uploadPhoto}" mode="advanced"
+			dragDropSupport="false" multiple="true" update="messageFileUpload"
+			sizeLimit="10000000" fileLimit="1"
+			allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" />
+		<p:messages id="messageFileUpload" autoUpdate="true" closable="true" />
          
         <p:commandButton action="#{produitMB.ajouterProduit}" value="Ajouter le produit" update=":message">
     	</p:commandButton>

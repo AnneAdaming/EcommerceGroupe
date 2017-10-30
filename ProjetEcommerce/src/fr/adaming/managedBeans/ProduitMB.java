@@ -1,5 +1,6 @@
 package fr.adaming.managedBeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -87,18 +88,28 @@ public class ProduitMB implements Serializable {
 		produit=produitService.modifyProduit(produit);
 		if(produit==null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de la modification du produit."));
-		} 
+			return "home";
+		}
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return "home";
 	}
 	public String ajouterProduit() {
 		categorie=categorieService.getCategorieById(idCategorie);
 		produit=produitService.addProduit(produit, categorie);
-		if(produit!=null) {
-			return "home";
-		} else {
+		if(produit==null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Problème lors de l'ajout du produit."));
 			return "ajout_produit";
 		}
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "home";
 	}
 	public String supprimerProduit() {
 		List<LigneCommande> listeLigneCommande = ligneCommandeService.getAllLigneCommande();

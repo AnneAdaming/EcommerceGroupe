@@ -12,7 +12,9 @@
 <h:body>
 	<h:form id="login">
 		<p:menubar>
-			<p:menuitem value="Voir le panier" url="panier.xhtml" />
+			<c:if test="#{adminMB.logged!=true}">
+				<p:menuitem value="Voir le panier" url="panier.xhtml" />
+			</c:if>
 			<c:if test="#{adminMB.logged==true}">
 				<p:menuitem value="Ajouter Produit" url="ajout_produit.xhtml" />
 				<p:menuitem value="Editer Catégorie" url="ajout_categorie.xhtml" />
@@ -71,19 +73,27 @@
 				<h:panelGrid columns="2" style="width:100%">
 					<p:graphicImage name="images/test.png" width="60px" height="60px" title="#{prod.designation}"
 						alt="image : #{prod.designation}" />
-					<h:panelGrid columns="2" style="width:100%">
+					<h:panelGrid columns="1" style="width:100%">
 						<h:outputText value="#{prod.description}" />
-						<h:outputText value="#{prod.prix}" />
 						<h:outputText value="#{prod.id}" />
 						<h:outputText value="#{prod.quantite}" />
-						<p:commandButton value="+1" action="#{panierMB.augmenter}" update=":message">
-							<f:setPropertyActionListener target="#{panierMB.id}" value="#{prod.id}" />
-						</p:commandButton>
-						<p:commandButton value="-1" action="#{panierMB.diminuer}" update=":message">
-							<f:setPropertyActionListener target="#{panierMB.id}" value="#{prod.id}" />
-						</p:commandButton>
+						<h:panelGrid columns="2" style="width:100%">
+							<h:outputText value="Prix : " />
+							<h:outputText value="#{prod.prix}" />
+						</h:panelGrid>
+						<c:if test="#{adminMB.logged!=true}">
+							<h:panelGrid columns="3" style="width:100%">
+								<h:outputText value="Panier : " />
+								<p:commandButton value="+1" action="#{panierMB.augmenter}" update=":message">
+									<f:setPropertyActionListener target="#{panierMB.id}" value="#{prod.id}" />
+								</p:commandButton>
+								<p:commandButton value="-1" action="#{panierMB.diminuer}" update=":message">
+									<f:setPropertyActionListener target="#{panierMB.id}" value="#{prod.id}" />
+								</p:commandButton>
+							</h:panelGrid>
+						</c:if>
 						<c:if test="#{adminMB.logged==true}">
-							<p:commandButton value="Modifier Produit" onclick="PF('modifDialog').show();" update="@all">
+							<p:commandButton value="Modifier Produit" onclick="PF('modifDialog').show();">
 								<f:setPropertyActionListener target="#{produitMB.idProduit}" value="#{prod.id}" />
 							</p:commandButton>
 							<p:commandButton value="Supprimer Produit" action="#{produitMB.supprimerProduit}" update="@all">
@@ -104,6 +114,12 @@
 				<p:inputText value="#{produitMB.produit.prix}" placeholder="Prix" required="true" />
 				<p:inputText value="#{produitMB.produit.quantite}" placeholder="Quantité" required="true" />
 				<p:inputText value="#{produitMB.idCategorie}" placeholder="Catégorie" required="true" />
+				<p:fileUpload id="fileIdPhoto"
+					fileUploadListener="#{fileUploadBean.uploadPhoto}" mode="advanced"
+					dragDropSupport="false" multiple="true" update="messageFileUpload"
+					sizeLimit="10000000" fileLimit="1"
+					allowTypes="/(\.|\/)(gif|jpe?g|zip)$/" />
+				<p:messages id="messageFileUpload" autoUpdate="true" closable="true" />
 			</h:panelGrid>
 			<p:commandButton value="Modifier" action="#{produitMB.modifierProduit()}" >
 				
